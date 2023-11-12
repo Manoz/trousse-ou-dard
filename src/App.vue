@@ -1,5 +1,5 @@
 <template>
-  <div class="max-w-4xl mx-auto px-4 md:px-0">
+  <div class="max-w-4xl mx-auto px-4">
     <header class="flex items-center gap-4 mb-16 mt-4">
       <RouterLink to="/">
         <img class="h-12 sm:h-16" src="@/assets/trousse.png" alt="" />
