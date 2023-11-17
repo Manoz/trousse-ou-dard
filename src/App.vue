@@ -5,9 +5,9 @@
         <img class="h-12 sm:h-16" src="@/assets/trousse.png" alt="" />
       </RouterLink>
 
-      <nav class="ml-auto flex gap-4 items-center" role="navigation">
+      <!-- <nav class="ml-auto flex gap-4 items-center" role="navigation">
         <RouterLink class="nav-link" to="/add">Ajouter</RouterLink>
-      </nav>
+      </nav> -->
     </header>
 
     <RouterView />
