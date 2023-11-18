@@ -6,7 +6,7 @@
       </p>
 
       <div class="mt-20">
-        <div class="grid grid-cols-1 gap-0.5 text-center sm:grid-cols-2">
+        <div class="grid grid-cols-1 gap-0.5 text-center sm:grid-cols-3">
           <RouterLink
             to="/trousse"
             class="home-link bg-primaryTrousse focus-visible:outline-primaryTrousse text-gray-600 hover:text-white rounded-tl-xl rounded-tr-xl sm:rounded-tl-2xl sm:rounded-bl-2xl sm:rounded-tr-none sm:rounded-br-none"
@@ -16,9 +16,16 @@
 
           <RouterLink
             to="/joke"
-            class="home-link bg-primaryJokes focus-visible:outline-primaryJokes text-gray-600 hover:text-gray-800 rounded-tr-none sm:rounded-tr-2xl rounded-br-xl sm:rounded-br-2xl rounded-bl-xl sm:rounded-bl-none"
+            class="home-link bg-primaryJokes focus-visible:outline-primaryJokes text-gray-600 hover:text-gray-800"
           >
-            Jokes
+            Joke
+          </RouterLink>
+
+          <RouterLink
+            to="/#"
+            class="home-link bg-primarySoon focus-visible:outline-primarySoon text-gray-600 hover:text-white rounded-tr-none sm:rounded-tr-2xl rounded-br-xl sm:rounded-br-2xl rounded-bl-xl sm:rounded-bl-none"
+          >
+            Soon
           </RouterLink>
         </div>
       </div>

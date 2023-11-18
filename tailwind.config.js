@@ -7,6 +7,7 @@ module.exports = {
       colors: {
         primaryTrousse: '#0fa3b1',
         primaryJokes: '#b5e2fa',
+        primarySoon: '#00a8e8',
         base: '#284b63',
         mainBg: '#f9f7f3'
       },

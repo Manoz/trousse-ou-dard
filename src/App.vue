@@ -6,17 +6,24 @@
       </RouterLink>
 
       <nav class="ml-auto flex gap-4 items-center" role="navigation">
-        <!-- <RouterLink class="nav-link" to="/add">Ajouter</RouterLink> -->
         <RouterLink
           class="text-gray-600 hover:text-gray-900 hover:underline transition-colors duration-200"
           to="/trousse"
           >Trousse</RouterLink
         >
+
         <RouterLink
           class="text-gray-600 hover:text-gray-900 hover:underline transition-colors duration-200"
           to="/joke"
         >
-          Jokes</RouterLink
+          Jokes
+        </RouterLink>
+
+        <RouterLink
+          class="text-gray-600 hover:text-gray-900 hover:underline transition-colors duration-200"
+          to="/#"
+        >
+          Soon</RouterLink
         >
       </nav>
     </header>

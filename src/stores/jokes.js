@@ -40,30 +40,30 @@ export const useJokesStore = defineStore('jokes', () => {
     }
   }
 
-  async function addJoke(newPhrase) {
-    jokes.value.push(newPhrase)
+  // async function addJoke(newPhrase) {
+  //   jokes.value.push(newPhrase)
 
-    await fetch(jsonBinUrl, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-        'X-Access-Key': jsonBinAccessKey
-      },
-      body: JSON.stringify({ phrases: jokes.value })
-    })
-      .then((response) => response.json())
-      .then((updatedData) => {
-        console.log('Joke ajoutée:', updatedData.record)
-        jokes.value = updatedData.record
-      })
-      .catch((error) => console.error("Erreur lors de l'ajout de la Joke:", error))
-  }
+  //   await fetch(jsonBinUrl, {
+  //     method: 'PUT',
+  //     headers: {
+  //       'Content-Type': 'application/json',
+  //       'X-Access-Key': jsonBinAccessKey
+  //     },
+  //     body: JSON.stringify({ phrases: jokes.value })
+  //   })
+  //     .then((response) => response.json())
+  //     .then((updatedData) => {
+  //       console.log('Joke ajoutée:', updatedData.record)
+  //       jokes.value = updatedData.record
+  //     })
+  //     .catch((error) => console.error("Erreur lors de l'ajout de la Joke:", error))
+  // }
 
   return {
     jokes,
     loadJokes,
     randomJoke,
-    refreshRandomJoke,
-    addJoke
+    refreshRandomJoke
+    // addJoke
   }
 })

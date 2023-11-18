@@ -40,30 +40,30 @@ export const usePhrasesStore = defineStore('phrases', () => {
     }
   }
 
-  async function addPhrase(newPhrase) {
-    phrases.value.push(newPhrase)
+  // async function addPhrase(newPhrase) {
+  //   phrases.value.push(newPhrase)
 
-    await fetch(jsonBinUrl, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-        'X-Access-Key': jsonBinAccessKey
-      },
-      body: JSON.stringify({ phrases: phrases.value })
-    })
-      .then((response) => response.json())
-      .then((updatedData) => {
-        console.log('Phrase ajoutée:', updatedData.record)
-        phrases.value = updatedData.record
-      })
-      .catch((error) => console.error("Erreur lors de l'ajout de la phrase:", error))
-  }
+  //   await fetch(jsonBinUrl, {
+  //     method: 'PUT',
+  //     headers: {
+  //       'Content-Type': 'application/json',
+  //       'X-Access-Key': jsonBinAccessKey
+  //     },
+  //     body: JSON.stringify({ phrases: phrases.value })
+  //   })
+  //     .then((response) => response.json())
+  //     .then((updatedData) => {
+  //       console.log('Phrase ajoutée:', updatedData.record)
+  //       phrases.value = updatedData.record
+  //     })
+  //     .catch((error) => console.error("Erreur lors de l'ajout de la phrase:", error))
+  // }
 
   return {
     phrases,
     loadPhrases,
     randomPhrase,
-    refreshRandomPhrase,
-    addPhrase
+    refreshRandomPhrase
+    // addPhrase
   }
 })
