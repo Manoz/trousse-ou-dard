@@ -4,14 +4,14 @@
     @submit.prevent="submitPhrase"
   >
     <input
-      class="w-full p-4 focus:ring-primary focus:border-primary"
+      class="w-full p-4 focus:ring-primaryTrousse focus:border-primaryTrousse"
       type="text"
       v-model="newPhrase"
       placeholder="Ajoute une nouvelle phrase"
     />
     <button
       type="submit"
-      class="w-full rounded-md bg-primary px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-opacity-80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary transition-colors duration-300"
+      class="w-full rounded-md bg-primaryTrousse px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-opacity-80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primaryTrousse transition-colors duration-300"
     >
       Envoyer OMG !
     </button>

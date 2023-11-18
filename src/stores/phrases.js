@@ -4,13 +4,10 @@ import { ref, computed } from 'vue'
 export const usePhrasesStore = defineStore('phrases', () => {
   const phrases = ref([])
   const currentPhraseIndex = ref(null)
-  const jsonBinID = import.meta.env.VITE_JSONBIN_ID
+  const jsonBinID = import.meta.env.VITE_TROUSSE_BIN_ID
   const jsonBinAccessKey = import.meta.env.VITE_JSONBIN_API_KEY
   const jsonBinUrl = `https://api.jsonbin.io/v3/b/${jsonBinID}`
-
-  const headers = {
-    'X-Access-Key': jsonBinAccessKey
-  }
+  const headers = { 'X-Access-Key': jsonBinAccessKey }
 
   async function loadPhrases() {
     const data = await fetch(jsonBinUrl, { headers })

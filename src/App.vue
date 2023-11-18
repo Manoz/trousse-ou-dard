@@ -5,9 +5,20 @@
         <img class="h-12 sm:h-16" src="@/assets/trousse.png" alt="" />
       </RouterLink>
 
-      <!-- <nav class="ml-auto flex gap-4 items-center" role="navigation">
-        <RouterLink class="nav-link" to="/add">Ajouter</RouterLink>
-      </nav> -->
+      <nav class="ml-auto flex gap-4 items-center" role="navigation">
+        <!-- <RouterLink class="nav-link" to="/add">Ajouter</RouterLink> -->
+        <RouterLink
+          class="text-gray-600 hover:text-gray-900 hover:underline transition-colors duration-200"
+          to="/trousse"
+          >Trousse</RouterLink
+        >
+        <RouterLink
+          class="text-gray-600 hover:text-gray-900 hover:underline transition-colors duration-200"
+          to="/joke"
+        >
+          Jokes</RouterLink
+        >
+      </nav>
     </header>
 
     <RouterView />
@@ -17,9 +28,3 @@
 <script setup>
 import { RouterLink, RouterView } from 'vue-router'
 </script>
-
-<style scoped>
-.nav-link {
-  @apply text-primary hover:text-rose-800 hover:underline;
-}
-</style>

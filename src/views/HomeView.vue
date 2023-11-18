@@ -1,36 +1,37 @@
 <template>
   <main>
     <div class="max-w-3xl mx-auto">
-      <p
-        class="text-center text-2xl leading-8 sm:text-4xl sm:leading-[3rem] font-light min-h-[170px]"
-      >
-        {{ phrasesStore.randomPhrase }}
+      <p class="text-center text-2xl leading-8 sm:text-4xl sm:leading-[3rem] font-light">
+        Tu veux faire quoi ?
       </p>
 
-      <div class="mx-auto flex items-center justify-center my-8">
-        <button
-          type="button"
-          @click="nextPhrase"
-          aria-label="Afficher une autre phrase"
-          class="rounded-md bg-primary px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-opacity-80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary transition-colors duration-300"
-        >
-          Une autre !
-        </button>
+      <div class="mt-20">
+        <div class="grid grid-cols-1 gap-0.5 text-center sm:grid-cols-2">
+          <RouterLink
+            to="/trousse"
+            class="home-link bg-primaryTrousse focus-visible:outline-primaryTrousse text-gray-600 hover:text-white rounded-tl-xl rounded-tr-xl sm:rounded-tl-2xl sm:rounded-bl-2xl sm:rounded-tr-none sm:rounded-br-none"
+          >
+            Trousse
+          </RouterLink>
+
+          <RouterLink
+            to="/joke"
+            class="home-link bg-primaryJokes focus-visible:outline-primaryJokes text-gray-600 hover:text-gray-800 rounded-tr-none sm:rounded-tr-2xl rounded-br-xl sm:rounded-br-2xl rounded-bl-xl sm:rounded-bl-none"
+          >
+            Jokes
+          </RouterLink>
+        </div>
       </div>
     </div>
   </main>
 </template>
 
 <script setup>
-import { usePhrasesStore } from '@/stores/phrases'
-
-const phrasesStore = usePhrasesStore()
-
-phrasesStore.loadPhrases().then(() => {
-  phrasesStore.refreshRandomPhrase()
-})
-
-const nextPhrase = () => {
-  phrasesStore.refreshRandomPhrase()
-}
+import { RouterLink } from 'vue-router'
 </script>
+
+<style scoped>
+.home-link {
+  @apply flex flex-col px-6 py-8 font-semibold text-xl transition-colors duration-200 bg-opacity-40 hover:bg-opacity-100;
+}
+</style>
