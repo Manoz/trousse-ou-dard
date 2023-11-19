@@ -9,7 +9,7 @@ module.exports = {
         primaryJokes: '#b5e2fa',
         primarySoon: '#00a8e8',
         base: '#284b63',
-        mainBg: '#f9f7f3'
+        mainBg: '#f8f8f8'
       },
 
       fontFamily: {

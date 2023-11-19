@@ -1,32 +1,22 @@
 <template>
-  <div class="max-w-4xl mx-auto px-4">
-    <header class="flex items-center gap-4 mb-16 mt-4">
+  <div class="max-w-6xl mx-auto px-4 my-4">
+    <header class="flex items-center gap-4 mb-16">
       <RouterLink to="/">
-        <img class="h-12 sm:h-16" src="@/assets/trousse.png" alt="" />
+        <img class="h-8" src="@/assets/trousse.png" alt="Tu veux jouer ? (aller à l'accueil)" />
       </RouterLink>
 
-      <nav class="ml-auto flex gap-4 items-center" role="navigation">
-        <RouterLink
-          class="text-gray-600 hover:text-gray-900 hover:underline transition-colors duration-200"
-          to="/trousse"
-          >Trousse</RouterLink
-        >
+      <nav class="ml-6 sm:ml-8 flex gap-6 sm:gap-8 items-center" role="navigation">
+        <RouterLink class="nav-link" to="/trousse">Trousse</RouterLink>
 
-        <RouterLink
-          class="text-gray-600 hover:text-gray-900 hover:underline transition-colors duration-200"
-          to="/joke"
-        >
-          Jokes
+        <RouterLink class="nav-link" to="/joke"> Jokes </RouterLink>
+
+        <RouterLink class="nav-link cursor-progress !text-gray-400 hover:!no-underline" to="/#">
+          Soon
         </RouterLink>
-
-        <RouterLink
-          class="text-gray-600 hover:text-gray-900 hover:underline transition-colors duration-200"
-          to="/#"
-        >
-          Soon</RouterLink
-        >
       </nav>
     </header>
+
+    <img class="hidden sm:block h-10 mx-auto mb-6 sm:mb-12" src="@/assets/trousse.png" alt="" />
 
     <RouterView />
   </div>
@@ -35,3 +25,9 @@
 <script setup>
 import { RouterLink, RouterView } from 'vue-router'
 </script>
+
+<style scoped>
+.nav-link {
+  @apply text-lg text-gray-800 hover:underline;
+}
+</style>
