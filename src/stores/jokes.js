@@ -9,20 +9,6 @@ export const useJokesStore = defineStore('jokes', () => {
   const jsonBinUrl = `https://api.jsonbin.io/v3/b/${jsonBinID}`
   const headers = { 'X-Access-Key': jsonBinAccessKey }
 
-  async function loadJokes() {
-    const data = await fetch(jsonBinUrl, { headers })
-      .then((response) => response.json())
-      .then((data) => {
-        return data?.record?.jokes || []
-      })
-      .catch((error) => {
-        console.error(error)
-      })
-
-    jokes.value = data
-    refreshRandomJoke()
-  }
-
   const randomJoke = computed(() => {
     if (jokes.value.length === 0) {
       return 'Chargement des jokes lô...'
@@ -38,6 +24,20 @@ export const useJokesStore = defineStore('jokes', () => {
       } while (newIndex === currentJokeIndex.value)
       currentJokeIndex.value = newIndex
     }
+  }
+
+  async function loadJokes() {
+    const fetchData = await fetch(jsonBinUrl, { headers })
+      .then((response) => response.json())
+      .then((data) => {
+        return data?.record?.jokes || []
+      })
+      .catch((error) => {
+        console.error(error)
+      })
+
+    jokes.value = fetchData
+    refreshRandomJoke()
   }
 
   // async function addJoke(newPhrase) {

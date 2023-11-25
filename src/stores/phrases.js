@@ -9,20 +9,6 @@ export const usePhrasesStore = defineStore('phrases', () => {
   const jsonBinUrl = `https://api.jsonbin.io/v3/b/${jsonBinID}`
   const headers = { 'X-Access-Key': jsonBinAccessKey }
 
-  async function loadPhrases() {
-    const data = await fetch(jsonBinUrl, { headers })
-      .then((response) => response.json())
-      .then((data) => {
-        return data?.record?.phrases || []
-      })
-      .catch((error) => {
-        console.error(error)
-      })
-
-    phrases.value = data
-    refreshRandomPhrase()
-  }
-
   const randomPhrase = computed(() => {
     if (phrases.value.length === 0) {
       return 'Chargement des phrases...'
@@ -38,6 +24,20 @@ export const usePhrasesStore = defineStore('phrases', () => {
       } while (newIndex === currentPhraseIndex.value)
       currentPhraseIndex.value = newIndex
     }
+  }
+
+  async function loadPhrases() {
+    const fetchData = await fetch(jsonBinUrl, { headers })
+      .then((response) => response.json())
+      .then((data) => {
+        return data?.record?.phrases || []
+      })
+      .catch((error) => {
+        console.error(error)
+      })
+
+    phrases.value = fetchData
+    refreshRandomPhrase()
   }
 
   // async function addPhrase(newPhrase) {
