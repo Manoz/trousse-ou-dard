@@ -2,7 +2,12 @@
   <div class="max-w-6xl mx-auto px-4 my-4">
     <header class="flex items-center gap-4 mb-10 sm:mb-16">
       <RouterLink to="/">
-        <img class="h-8" src="@/assets/trousse.png" alt="Tu veux jouer ? (aller à l'accueil)" />
+        <img
+          height="32"
+          width="32"
+          src="@/assets/trousse.png"
+          alt="Tu veux jouer ? (aller à l'accueil)"
+        />
       </RouterLink>
 
       <nav class="ml-0 sm:ml-8 flex gap-4 sm:gap-8 items-center" role="navigation">
