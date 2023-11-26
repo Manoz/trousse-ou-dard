@@ -31,6 +31,15 @@
         />
       </div>
 
+      <div class="mx-auto flex items-center justify-center my-8 gap-4">
+        <ButtonPrimary
+          bg-class="bg-gray-500"
+          focus-class="focus-visible:outline-gray-500"
+          label='Voir tous les "Tu préfères"'
+          @click="isModalAllOpen = true"
+        />
+      </div>
+
       <ModalForm
         modal-title='Ajouter un "Tu préfères"'
         :is-open="isModalOpen"
@@ -68,6 +77,24 @@
           </div>
         </template>
       </ModalForm>
+
+      <ModalForm
+        modal-title='Tous les "Tu préfères"'
+        :is-open="isModalAllOpen"
+        custom-focus-class="focus:ring-amber-500"
+        size="lg"
+        @update:is-open="isModalAllOpen = $event"
+      >
+        <template #default>
+          <div class="mb-4 mt-2">
+            <ul class="pl-4 list-outside list-disc">
+              <li class="py-0.5" v-for="prefer in preferStore.prefers" :key="prefer">
+                <p class="text-gray-900">{{ prefer }}</p>
+              </li>
+            </ul>
+          </div>
+        </template>
+      </ModalForm>
     </div>
   </main>
 </template>
@@ -84,6 +111,7 @@ const currentPrefer = ref('')
 const displayedPrefers = ref([])
 const newPrefer = ref('')
 const isModalOpen = ref(false)
+const isModalAllOpen = ref(false)
 const isAddingPrefer = ref(false)
 const displaySuccessMessage = ref(false)
 

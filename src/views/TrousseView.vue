@@ -31,6 +31,15 @@
         />
       </div>
 
+      <div class="mx-auto flex items-center justify-center my-8 gap-4">
+        <ButtonPrimary
+          bg-class="bg-gray-500"
+          focus-class="focus-visible:outline-gray-500"
+          label="Voir toutes les trousses"
+          @click="isModalAllOpen = true"
+        />
+      </div>
+
       <ModalForm
         :modal-title="'Ajouter une trousse'"
         :is-open="isModalOpen"
@@ -68,6 +77,24 @@
           </div>
         </template>
       </ModalForm>
+
+      <ModalForm
+        modal-title="Toutes les trousses"
+        :is-open="isModalAllOpen"
+        custom-focus-class="focus:ring-sky-500"
+        size="lg"
+        @update:is-open="isModalAllOpen = $event"
+      >
+        <template #default>
+          <div class="mb-4 mt-2">
+            <ul class="pl-4 list-outside list-disc">
+              <li class="py-0.5" v-for="phrase in phraseStore.phrases" :key="phrase">
+                <p class="text-gray-900">{{ phrase }}</p>
+              </li>
+            </ul>
+          </div>
+        </template>
+      </ModalForm>
     </div>
   </main>
 </template>
@@ -84,6 +111,7 @@ const currentPhrase = ref('')
 const displayedPhrases = ref([])
 const newPhrase = ref('')
 const isModalOpen = ref(false)
+const isModalAllOpen = ref(false)
 const isAddingPhrase = ref(false)
 const displaySuccessMessage = ref(false)
 

@@ -25,7 +25,11 @@
             leave-to="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
           >
             <DialogPanel
-              class="relative transform overflow-hidden rounded-lg bg-white px-4 pb-4 pt-5 text-left shadow-xl transition-all sm:my-8 w-full sm:max-w-lg sm:p-6"
+              class="relative transform overflow-hidden rounded-lg bg-white px-4 pb-4 pt-5 text-left shadow-xl transition-all sm:my-8 w-full sm:p-6"
+              :class="{
+                'sm:max-w-lg': size === 'md',
+                'sm:max-w-3xl': size === 'lg'
+              }"
             >
               <div class="absolute right-0 top-0 pr-4 pt-4 block">
                 <button
@@ -46,7 +50,7 @@
                   {{ modalTitle }}
                 </DialogTitle>
 
-                <div class="mt-6">
+                <div class="mt-6 max-h-[80vh] overflow-x-auto">
                   <slot />
                 </div>
               </div>
@@ -74,6 +78,10 @@ const props = defineProps({
   customFocusClass: {
     type: String,
     default: ''
+  },
+  size: {
+    type: String,
+    default: 'md'
   }
 })
 
