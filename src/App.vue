@@ -6,11 +6,19 @@
       </RouterLink>
 
       <nav class="ml-6 sm:ml-8 flex gap-6 sm:gap-8 items-center" role="navigation">
-        <RouterLink class="nav-link" to="/trousse">Trousse</RouterLink>
+        <RouterLink active-class="!text-sky-600 underline" class="nav-link" to="/trousse">
+          Trousse
+        </RouterLink>
 
-        <RouterLink class="nav-link" to="/joke"> Jokes </RouterLink>
+        <RouterLink active-class="!text-teal-600 underline" class="nav-link" to="/joke">
+          Jokes
+        </RouterLink>
 
-        <RouterLink class="nav-link cursor-progress !text-gray-400 hover:!no-underline" to="/#">
+        <RouterLink
+          active-class="!text-amber-600 underline"
+          class="nav-link cursor-progress !text-gray-400 hover:!no-underline"
+          to="/soon"
+        >
           Soon
         </RouterLink>
       </nav>

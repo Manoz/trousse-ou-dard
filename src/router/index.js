@@ -18,12 +18,12 @@ const router = createRouter({
       path: '/joke',
       name: 'joke',
       component: () => import('../views/JokeView.vue')
+    },
+    {
+      path: '/soon',
+      name: 'soon',
+      component: () => import('../views/SoonView.vue')
     }
-    // {
-    //   path: '/add',
-    //   name: 'add',
-    //   component: () => import('../views/AddView.vue')
-    // }
   ]
 })
 

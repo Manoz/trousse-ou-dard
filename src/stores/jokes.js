@@ -1,69 +1,70 @@
 import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
 
-export const useJokesStore = defineStore('jokes', () => {
-  const jokes = ref([])
-  const currentJokeIndex = ref(null)
-  const jsonBinID = import.meta.env.VITE_JOKE_BIN_ID
-  const jsonBinAccessKey = import.meta.env.VITE_JSONBIN_API_KEY
-  const jsonBinUrl = `https://api.jsonbin.io/v3/b/${jsonBinID}`
-  const headers = { 'X-Access-Key': jsonBinAccessKey }
+const jsonBinID = import.meta.env.VITE_JOKE_BIN_ID
+const jsonBinAccessKey = import.meta.env.VITE_JSONBIN_API_KEY
+const jsonBinUrl = `https://api.jsonbin.io/v3/b/${jsonBinID}`
+const headers = { 'X-Access-Key': jsonBinAccessKey }
 
-  const randomJoke = computed(() => {
-    if (jokes.value.length === 0) {
-      return 'Chargement des jokes lô...'
+export const useJokeStore = defineStore('jokeStore', {
+  state: () => ({
+    jokes: [],
+    loaded: false
+  }),
+
+  actions: {
+    async fetchJokes() {
+      try {
+        const fetchData = await fetch(jsonBinUrl, { headers })
+          .then((response) => response.json())
+          .then((data) => {
+            return data?.record?.jokes || []
+          })
+          .catch((error) => {
+            console.error('Oops, something went wrong with JSONBin.io', error)
+          })
+
+        return fetchData || []
+      } catch (error) {
+        console.error('Oops, something went wrong while loading the jokes', error)
+      }
+    },
+
+    async getJokes() {
+      if (this.loaded) return
+
+      const jokes = await this.fetchJokes()
+
+      this.jokes = jokes
+      this.loaded = true
+    },
+
+    async addJoke(newJoke) {
+      try {
+        const jokes = this.jokes
+        jokes.push(newJoke)
+
+        // Send the updated jokes array to JSONBin
+        const newJokes = await fetch(jsonBinUrl, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+            ...headers
+          },
+          body: JSON.stringify({ jokes })
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            return data?.record?.jokes || []
+          })
+          .catch((error) => {
+            console.error(error)
+          })
+
+        this.jokes = newJokes
+      } catch (error) {
+        console.error('Oops, something went wrong while adding a joke', error)
+      }
     }
-    return jokes.value[currentJokeIndex.value]
-  })
-
-  const refreshRandomJoke = () => {
-    if (jokes.value.length > 0) {
-      let newIndex
-      do {
-        newIndex = Math.floor(Math.random() * jokes.value.length)
-      } while (newIndex === currentJokeIndex.value)
-      currentJokeIndex.value = newIndex
-    }
-  }
-
-  async function loadJokes() {
-    const fetchData = await fetch(jsonBinUrl, { headers })
-      .then((response) => response.json())
-      .then((data) => {
-        return data?.record?.jokes || []
-      })
-      .catch((error) => {
-        console.error(error)
-      })
-
-    jokes.value = fetchData
-    refreshRandomJoke()
-  }
-
-  // async function addJoke(newPhrase) {
-  //   jokes.value.push(newPhrase)
-
-  //   await fetch(jsonBinUrl, {
-  //     method: 'PUT',
-  //     headers: {
-  //       'Content-Type': 'application/json',
-  //       'X-Access-Key': jsonBinAccessKey
-  //     },
-  //     body: JSON.stringify({ phrases: jokes.value })
-  //   })
-  //     .then((response) => response.json())
-  //     .then((updatedData) => {
-  //       console.log('Joke ajoutée:', updatedData.record)
-  //       jokes.value = updatedData.record
-  //     })
-  //     .catch((error) => console.error("Erreur lors de l'ajout de la Joke:", error))
-  // }
-
-  return {
-    jokes,
-    loadJokes,
-    randomJoke,
-    refreshRandomJoke
-    // addJoke
   }
 })
