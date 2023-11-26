@@ -20,9 +20,9 @@ const router = createRouter({
       component: () => import('../views/JokeView.vue')
     },
     {
-      path: '/soon',
-      name: 'soon',
-      component: () => import('../views/SoonView.vue')
+      path: '/prefer',
+      name: 'prefer',
+      component: () => import('../views/PreferView.vue')
     }
   ]
 })

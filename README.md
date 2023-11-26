@@ -47,6 +47,7 @@ Your final `.env` file should look like this:
 ```
 VITE_TROUSSE_BIN_ID="xxxxxx"
 VITE_JOKE_BIN_ID="xxxxxx"
+VITE_PREFER_BIN_ID="xxxxxx"
 VITE_JSONBIN_API_KEY="\$5f\$42\$xxxxxxx"
 ```
 
@@ -90,4 +91,4 @@ See [LICENSE](https://github.com/Manoz/trousse-ou-dard/blob/main/LICENSE) for mo
 
 [licenses-url]: https://github.com/Manoz/trousse-ou-dard/blob/main/LICENSE
 [licenses]: https://img.shields.io/badge/license-MIT-blue.svg
-[version]: https://img.shields.io/badge/version-1.0.0-%23d85a94.svg
+[version]: https://img.shields.io/badge/version-1.0.1-%23d85a94.svg

@@ -1,5 +1,5 @@
 <template>
-  <main>
+  <main class="mb-10 sm:mb-0">
     <div class="max-w-4xl mx-auto">
       <p class="text-center text-2xl leading-8 sm:text-4xl sm:leading-[3rem] font-light">
         Tu veux faire quoi ?
@@ -22,10 +22,9 @@
           />
 
           <HomeCard
-            title="Soon"
-            desc="Lui, il arrive bientôt... le temps de générer ce qu'il faut. Mais promis ça devrait être assez marrant."
-            link="/soon"
-            :soon="true"
+            title="Tu préfères"
+            desc="Lui il est simple. Tu préfères ça ou ça ? Et tu choisis. C'est con comme moi mais c'est marrant."
+            link="/prefer"
             custom-class="focus-within:ring-amber-600"
           />
         </div>
