@@ -22,10 +22,10 @@ I wanted to keep the name "trousse ou dard" simply because it made me smile :)
 ## Development
 
 1. Clone the app using  
-   `git@github.com:Manoz/trousse-ou-dard.git`
+   `git clone git@github.com:Manoz/trousse-ou-dard.git`
 
-2. Install dependencies using `yarn`.
-3. Run the app using `yarn dev`.
+2. Install dependencies using `yarn`
+3. Run the app using `yarn dev`
 
 **Using JSBin.io**
 
