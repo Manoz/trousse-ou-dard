@@ -23,6 +23,11 @@ const router = createRouter({
       path: '/prefer',
       name: 'prefer',
       component: () => import('../views/PreferView.vue')
+    },
+    {
+      path: '/ten-but',
+      name: 'ten-but',
+      component: () => import('../views/TenBut.vue')
     }
   ]
 })

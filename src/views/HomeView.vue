@@ -6,7 +6,7 @@
       </p>
 
       <div class="mt-10 sm:mt-20">
-        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+        <div class="grid grid-cols-1 sm:grid-cols-4 gap-4">
           <HomeCard
             title="Trousse"
             desc="Tu connais Action ou Vérité ? Truth or Dare ? Et bien Trousse c'est uniquement des vérités."
@@ -26,6 +26,12 @@
             desc="Lui il est simple. Tu préfères ça ou ça ? Et tu choisis. C'est con comme moi mais c'est marrant."
             link="/prefer"
             custom-class="focus-within:ring-amber-600"
+          />
+          <HomeCard
+            title="C'est un 10 mais..."
+            desc="C'est un 10 est le jeu de soirée qui transforme vos amis en juges et vos choix de vie en sujets de débat."
+            link="/ten-but"
+            custom-class="focus-within:ring-sky-600"
           />
         </div>
       </div>

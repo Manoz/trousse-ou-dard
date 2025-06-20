@@ -22,6 +22,9 @@
         <RouterLink active-class="!text-amber-600 underline" class="nav-link" to="/prefer">
           Tu préfères
         </RouterLink>
+        <RouterLink active-class="!text-amber-600 underline" class="nav-link" to="/ten-but">
+          C'est un 10 mais...
+        </RouterLink>
       </nav>
 
       <a
