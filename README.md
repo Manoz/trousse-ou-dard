@@ -29,9 +29,9 @@ I wanted to keep the name "trousse ou dard" simply because it made me smile :)
 
 **Using JSBin.io**
 
-The app uses [JSBin.io](https://jsbin.io) to store the data.
+The app uses [jsonbin.io](https://jsonbin.io) to store the data.
 
-1. Simply go to https://jsbin.io/ and create a new account.
+1. Simply go to https://jsonbin.io/ and create a new account.
 2. Go to https://jsonbin.io/app/app/api-keys then create and copy your API key. In my case I use the `X-ACCESS-KEY`.
 3. Copy the token and add it to your `.env` file. Don't forget to escape the `$` character. So for example if JSOnbin gives you the following token: `$5f$42$xxxxxxx`, you should escape it like this: `\$5f\$42\$xxxxxxx`.  
    Your `.env` file should look like this:
