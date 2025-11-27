@@ -48,6 +48,7 @@ Your final `.env` file should look like this:
 VITE_TROUSSE_BIN_ID="xxxxxx"
 VITE_JOKE_BIN_ID="xxxxxx"
 VITE_PREFER_BIN_ID="xxxxxx"
+VITE_TEN_BIN_ID="xxxxxx"
 VITE_JSONBIN_API_KEY="\$5f\$42\$xxxxxxx"
 ```
 
