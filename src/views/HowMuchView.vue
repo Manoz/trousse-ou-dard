@@ -26,7 +26,7 @@
         <ButtonOutline
           border-class="border-violet-600"
           focus-class="focus-visible:outline-violet-600"
-          label='Ajouter un "Pour combien"'
+          label="Ajouter un &quot;Pour combien&quot;"
           @click="isModalOpen = true"
         />
       </div>
@@ -35,13 +35,13 @@
         <ButtonPrimary
           bg-class="bg-gray-500"
           focus-class="focus-visible:outline-gray-500"
-          label='Voir tous les "Pour combien"'
+          label="Voir tous les &quot;Pour combien&quot;"
           @click="isModalAllOpen = true"
         />
       </div>
 
       <ModalForm
-        modal-title='Ajouter un "Pour combien"'
+        modal-title="Ajouter un &quot;Pour combien&quot;"
         :is-open="isModalOpen"
         custom-focus-class="focus:ring-violet-500"
         @update:is-open="isModalOpen = $event"
@@ -58,7 +58,7 @@
               :disabled="isAddingHowMuch"
               class="block w-full border-0 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-violet-600 sm:text-sm sm:leading-6"
               :class="{ 'opacity-50 cursor-not-allowed': isAddingHowMuch }"
-            />
+            >
           </div>
 
           <ButtonPrimary
@@ -79,7 +79,7 @@
       </ModalForm>
 
       <ModalForm
-        modal-title='Tous les "Pour combien"'
+        modal-title="Tous les &quot;Pour combien&quot;"
         :is-open="isModalAllOpen"
         custom-focus-class="focus:ring-violet-500"
         size="lg"
@@ -88,7 +88,11 @@
         <template #default>
           <div class="mb-4 mt-2">
             <ul class="pl-4 list-outside list-disc">
-              <li class="py-0.5" v-for="howMuch in howMuchStore.howMuchs" :key="howMuch">
+              <li
+                class="py-0.5"
+                v-for="howMuch in howMuchStore.howMuchs"
+                :key="howMuch"
+              >
                 <p class="text-gray-900">
                   {{ howMuch }}
                 </p>
