@@ -10,7 +10,7 @@
         >
       </RouterLink>
 
-      <nav class="ml-0 sm:ml-8 flex gap-4 sm:gap-8 items-center" role="navigation">
+      <nav class="ml-0 sm:ml-8 hidden sm:flex gap-4 sm:gap-8 items-center" role="navigation">
         <RouterLink
           active-class="!text-sky-600 underline"
           class="nav-link"
