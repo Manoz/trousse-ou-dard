@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia'
 import { addContentApi, fetchApi } from '../api/storeApi'
 
-const jsonBinID = import.meta.env.VITE_POUR_COMBIEN_BIN_ID
+const jsonBinID = import.meta.env.VITE_HOWMUCH_BIN_ID
 
 export const usePourCombienStore = defineStore('pourCombienStore', {
   state: () => ({
