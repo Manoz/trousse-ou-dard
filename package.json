@@ -1,7 +1,7 @@
 {
   "name": "trousse-ou-dard",
   "description": "A little app with silly games just for parties with my buddies.",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "author": {
     "name": "Manoz",
     "email": "manoz@outlook.com",
@@ -20,36 +20,36 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs --fix --ignore-path .gitignore",
+    "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs --fix",
     "format": "prettier --write src/",
     "prepare": "husky install"
   },
   "lint-staged": {
-    "**/*.{vue,js}": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs --fix --ignore-path .gitignore",
+    "**/*.{vue,js}": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs --fix",
     "src/**/*.{vue,js}": "prettier --write src/"
   },
   "dependencies": {
-    "@headlessui/vue": "^1.7.16",
-    "@heroicons/vue": "^2.0.18",
-    "pinia": "^2.1.7",
-    "vue": "^3.3.9",
-    "vue-router": "^4.2.5"
+    "@headlessui/vue": "^1.7.23",
+    "@heroicons/vue": "^2.2.0",
+    "pinia": "^3.0.4",
+    "vue": "^3.5.25",
+    "vue-router": "^4.6.3"
   },
   "devDependencies": {
-    "@novius/eslint-config-vue": "^1.0.2",
-    "@rushstack/eslint-patch": "^1.6.0",
-    "@tailwindcss/forms": "^0.5.7",
-    "@vitejs/plugin-vue": "^4.5.0",
-    "@vue/eslint-config-prettier": "^8.0.0",
-    "autoprefixer": "^10.4.16",
-    "eslint": "^8.54.0",
-    "eslint-plugin-import": "^2.29.0",
-    "husky": "^8.0.3",
-    "lint-staged": "^15.1.0",
-    "postcss": "^8.4.31",
-    "prettier": "^3.1.0",
+    "@novius/eslint-config-vue": "^2.0.2",
+    "@rushstack/eslint-patch": "^1.15.0",
+    "@tailwindcss/forms": "^0.5.10",
+    "@vitejs/plugin-vue": "^6.0.2",
+    "@vue/eslint-config-prettier": "^10.2.0",
+    "autoprefixer": "^10.4.22",
+    "eslint": "^9.39.1",
+    "eslint-plugin-import": "^2.32.0",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.2.7",
+    "postcss": "^8.5.6",
+    "prettier": "^3.6.2",
     "tailwindcss": "^3.3.5",
-    "vite": "^5.0.2",
-    "vite-plugin-pwa": "^0.17.2"
+    "vite": "^7.2.4",
+    "vite-plugin-pwa": "^1.1.0"
   }
 }

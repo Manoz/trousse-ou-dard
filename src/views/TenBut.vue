@@ -5,28 +5,28 @@
         v-if="currentTen"
         class="text-center text-2xl leading-8 sm:text-4xl sm:leading-[3rem] font-light min-h-[170px]"
       >
-        {{ currentTen }}
+        C'est un 10 mais {{ currentTen }}
       </p>
 
       <p
         v-else
         class="text-center text-2xl leading-8 sm:text-4xl sm:leading-[3rem] font-light min-h-[170px]"
       >
-        Chargement d'un "C'est un 10 mais..."
+        Chargement d'un "C’est un 10 mais..."
       </p>
 
       <div class="mx-auto flex items-center justify-center my-8 gap-4">
         <ButtonPrimary
-          bg-class="bg-teal-600"
-          focus-class="focus-visible:outline-teal-600"
+          bg-class="bg-rose-600"
+          focus-class="focus-visible:outline-rose-600"
           label="Une autre !"
           @click="displayRandomTen"
         />
 
         <ButtonOutline
-          border-class="border-teal-600"
-          focus-class="focus-visible:outline-teal-600"
-          label='Ajouter un "C&apos;est un 10 mais"'
+          border-class="border-rose-600"
+          focus-class="focus-visible:outline-rose-600"
+          label="Ajouter un &quot;C’est un 10 mais&quot;"
           @click="isModalOpen = true"
         />
       </div>
@@ -35,7 +35,7 @@
         <ButtonPrimary
           bg-class="bg-gray-500"
           focus-class="focus-visible:outline-gray-500"
-          label='Voir tous les "C\&apos;est un 10 mais"'
+          label="Voir tous les &quot;C’est un 10 mais&quot;"
           @click="isModalAllOpen = true"
         />
       </div>
@@ -56,14 +56,14 @@
               id="newTen"
               v-model="newTen"
               :disabled="isAddingTen"
-              class="block w-full border-0 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-teal-600 sm:text-sm sm:leading-6"
+              class="block w-full border-0 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-rose-600 sm:text-sm sm:leading-6"
               :class="{ 'opacity-50 cursor-not-allowed': isAddingTen }"
-            />
+            >
           </div>
 
           <ButtonPrimary
-            bg-class="bg-teal-600"
-            focus-class="focus-visible:outline-teal-600"
+            bg-class="bg-rose-600"
+            focus-class="focus-visible:outline-rose-600"
             label="Go OMG !"
             @click="addNewTen"
             :disabled="isAddingTen"
@@ -88,8 +88,14 @@
         <template #default>
           <div class="mb-4 mt-2">
             <ul class="pl-4 list-outside list-disc">
-              <li class="py-0.5" v-for="ten in tenStore.tens" :key="ten">
-                <p class="text-gray-900">{{ ten }}</p>
+              <li
+                class="py-0.5"
+                v-for="ten in tenStore.tens"
+                :key="ten"
+              >
+                <p class="text-gray-900">
+                  {{ ten }}
+                </p>
               </li>
             </ul>
           </div>

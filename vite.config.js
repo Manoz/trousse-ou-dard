@@ -4,7 +4,7 @@ import { VitePWA } from 'vite-plugin-pwa'
 import vue from '@vitejs/plugin-vue'
 
 export default defineConfig(({ mode }) => {
-  // eslint-disable-next-line no-undef
+   
   const env = loadEnv(mode, process.cwd(), '')
 
   return {

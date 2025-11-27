@@ -58,7 +58,7 @@
               :disabled="isAddingJoke"
               class="block w-full border-0 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-teal-600 sm:text-sm sm:leading-6"
               :class="{ 'opacity-50 cursor-not-allowed': isAddingJoke }"
-            />
+            >
           </div>
 
           <ButtonPrimary
@@ -88,8 +88,14 @@
         <template #default>
           <div class="mb-4 mt-2">
             <ul class="pl-4 list-outside list-disc">
-              <li class="py-0.5" v-for="joke in jokeStore.jokes" :key="joke">
-                <p class="text-gray-900">{{ joke }}</p>
+              <li
+                class="py-0.5"
+                v-for="joke in jokeStore.jokes"
+                :key="joke"
+              >
+                <p class="text-gray-900">
+                  {{ joke }}
+                </p>
               </li>
             </ul>
           </div>

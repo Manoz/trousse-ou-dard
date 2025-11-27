@@ -26,7 +26,7 @@
         <ButtonOutline
           border-class="border-amber-600"
           focus-class="focus-visible:outline-amber-600"
-          label='Ajouter un "Tu préfères"'
+          label="Ajouter un &quot;Tu préfères&quot;"
           @click="isModalOpen = true"
         />
       </div>
@@ -35,13 +35,13 @@
         <ButtonPrimary
           bg-class="bg-gray-500"
           focus-class="focus-visible:outline-gray-500"
-          label='Voir tous les "Tu préfères"'
+          label="Voir tous les &quot;Tu préfères&quot;"
           @click="isModalAllOpen = true"
         />
       </div>
 
       <ModalForm
-        modal-title='Ajouter un "Tu préfères"'
+        modal-title="Ajouter un &quot;Tu préfères&quot;"
         :is-open="isModalOpen"
         custom-focus-class="focus:ring-amber-500"
         @update:is-open="isModalOpen = $event"
@@ -58,7 +58,7 @@
               :disabled="isAddingPrefer"
               class="block w-full border-0 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-amber-600 sm:text-sm sm:leading-6"
               :class="{ 'opacity-50 cursor-not-allowed': isAddingPrefer }"
-            />
+            >
           </div>
 
           <ButtonPrimary
@@ -79,7 +79,7 @@
       </ModalForm>
 
       <ModalForm
-        modal-title='Tous les "Tu préfères"'
+        modal-title="Tous les &quot;Tu préfères&quot;"
         :is-open="isModalAllOpen"
         custom-focus-class="focus:ring-amber-500"
         size="lg"
@@ -88,8 +88,14 @@
         <template #default>
           <div class="mb-4 mt-2">
             <ul class="pl-4 list-outside list-disc">
-              <li class="py-0.5" v-for="prefer in preferStore.prefers" :key="prefer">
-                <p class="text-gray-900">{{ prefer }}</p>
+              <li
+                class="py-0.5"
+                v-for="prefer in preferStore.prefers"
+                :key="prefer"
+              >
+                <p class="text-gray-900">
+                  {{ prefer }}
+                </p>
               </li>
             </ul>
           </div>
