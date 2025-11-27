@@ -26,7 +26,7 @@
         <ButtonOutline
           border-class="border-rose-600"
           focus-class="focus-visible:outline-rose-600"
-          label="Ajouter un &quot;C’est un 10 mais&quot;"
+          label="Ajouter un 'C’est un 10 mais'"
           @click="isModalOpen = true"
         />
       </div>
@@ -35,7 +35,7 @@
         <ButtonPrimary
           bg-class="bg-gray-500"
           focus-class="focus-visible:outline-gray-500"
-          label="Voir tous les &quot;C’est un 10 mais&quot;"
+          label="Voir tous les 'C’est un 10 mais...'"
           @click="isModalAllOpen = true"
         />
       </div>
@@ -150,7 +150,7 @@ const addNewTen = () => {
     isAddingTen.value = true
 
     tenStore.addTen(newTen.value).then(() => {
-      newTen.value = "C'est un 10 mais "
+      newTen.value = ''
       isAddingTen.value = false
 
       displaySuccessMessage.value = true
