@@ -30,9 +30,9 @@ const router = createRouter({
       component: () => import('../views/TenBut.vue')
     },
     {
-      path: '/pour-combien',
-      name: 'pour-combien',
-      component: () => import('../views/PourCombienView.vue')
+      path: '/how-much',
+      name: 'how-much',
+      component: () => import('../views/HowMuchView.vue')
     }
   ]
 })

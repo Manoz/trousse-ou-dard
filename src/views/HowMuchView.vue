@@ -2,10 +2,10 @@
   <main>
     <div class="max-w-3xl mx-auto">
       <p
-        v-if="currentPourCombien"
+        v-if="currentHowMuch"
         class="text-center text-2xl leading-8 sm:text-4xl sm:leading-[3rem] font-light min-h-[170px]"
       >
-        Pour combien {{ currentPourCombien }}
+        Pour combien {{ currentHowMuch }}
       </p>
 
       <p
@@ -20,7 +20,7 @@
           bg-class="bg-violet-600"
           focus-class="focus-visible:outline-violet-600"
           label="Une autre !"
-          @click="displayRandomPourCombien"
+          @click="displayRandomHowMuch"
         />
 
         <ButtonOutline
@@ -47,17 +47,17 @@
         @update:is-open="isModalOpen = $event"
       >
         <template #default>
-          <label class="block text-sm font-medium leading-6 text-gray-900" for="newPourCombien">
+          <label class="block text-sm font-medium leading-6 text-gray-900" for="newHowMuch">
             Écris ton "Pour combien" ici :
           </label>
 
           <div class="mb-4 mt-2">
             <input
-              id="newPourCombien"
-              v-model="newPourCombien"
-              :disabled="isAddingPourCombien"
+              id="newHowMuch"
+              v-model="newHowMuch"
+              :disabled="isAddingHowMuch"
               class="block w-full border-0 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-violet-600 sm:text-sm sm:leading-6"
-              :class="{ 'opacity-50 cursor-not-allowed': isAddingPourCombien }"
+              :class="{ 'opacity-50 cursor-not-allowed': isAddingHowMuch }"
             />
           </div>
 
@@ -65,8 +65,8 @@
             bg-class="bg-violet-600"
             focus-class="focus-visible:outline-violet-600"
             label="Go OMG !"
-            @click="addNewPourCombien"
-            :disabled="isAddingPourCombien"
+            @click="addNewHowMuch"
+            :disabled="isAddingHowMuch"
           />
 
           <div
@@ -88,13 +88,9 @@
         <template #default>
           <div class="mb-4 mt-2">
             <ul class="pl-4 list-outside list-disc">
-              <li
-                class="py-0.5"
-                v-for="pourCombien in pourCombienStore.pourCombiens"
-                :key="pourCombien"
-              >
+              <li class="py-0.5" v-for="howMuch in howMuchStore.howMuchs" :key="howMuch">
                 <p class="text-gray-900">
-                  {{ pourCombien }}
+                  {{ howMuch }}
                 </p>
               </li>
             </ul>
@@ -107,53 +103,53 @@
 
 <script setup>
 import { ref, onMounted } from 'vue'
-import { usePourCombienStore } from '@/stores/pour-combien'
+import { useHowMuchStore } from '@/stores/how-much'
 import ModalForm from '@/components/ModalForm.vue'
 import ButtonPrimary from '@/components/ButtonPrimary.vue'
 import ButtonOutline from '@/components/ButtonOutline.vue'
 
-const pourCombienStore = usePourCombienStore()
-const currentPourCombien = ref('')
-const displayedPourCombiens = ref([])
-const newPourCombien = ref('')
+const howMuchStore = useHowMuchStore()
+const currentHowMuch = ref('')
+const displayedHowMuchs = ref([])
+const newHowMuch = ref('')
 const isModalOpen = ref(false)
 const isModalAllOpen = ref(false)
-const isAddingPourCombien = ref(false)
+const isAddingHowMuch = ref(false)
 const displaySuccessMessage = ref(false)
 
 onMounted(async () => {
-  await pourCombienStore.getPourCombiens()
-  displayRandomPourCombien()
+  await howMuchStore.getHowMuchs()
+  displayRandomHowMuch()
 })
 
-const displayRandomPourCombien = () => {
-  // Filter to get only PourCombiens that have not been displayed yet
-  const unshownPourCombiens = pourCombienStore.pourCombiens.filter(
-    (pourCombien) => !displayedPourCombiens.value.includes(pourCombien)
+const displayRandomHowMuch = () => {
+  // Filter to get only HowMuchs that have not been displayed yet
+  const unshownHowMuchs = howMuchStore.howMuchs.filter(
+    (howMuch) => !displayedHowMuchs.value.includes(howMuch)
   )
 
-  // If all PourCombiens have been displayed, reset the list
-  if (unshownPourCombiens.length === 0) {
-    displayedPourCombiens.value = []
-    pourCombienStore.getPourCombiens()
+  // If all HowMuchs have been displayed, reset the list
+  if (unshownHowMuchs.length === 0) {
+    displayedHowMuchs.value = []
+    howMuchStore.getHowMuchs()
     return
   }
 
-  // Get a random PourCombien from the list
-  const randomIndex = Math.floor(Math.random() * unshownPourCombiens.length)
-  currentPourCombien.value = unshownPourCombiens[randomIndex]
-  displayedPourCombiens.value.push(currentPourCombien.value)
+  // Get a random HowMuch from the list
+  const randomIndex = Math.floor(Math.random() * unshownHowMuchs.length)
+  currentHowMuch.value = unshownHowMuchs[randomIndex]
+  displayedHowMuchs.value.push(currentHowMuch.value)
 }
 
-const addNewPourCombien = () => {
-  if (isAddingPourCombien.value) return
+const addNewHowMuch = () => {
+  if (isAddingHowMuch.value) return
 
-  if (newPourCombien.value) {
-    isAddingPourCombien.value = true
+  if (newHowMuch.value) {
+    isAddingHowMuch.value = true
 
-    pourCombienStore.addPourCombien(newPourCombien.value).then(() => {
-      newPourCombien.value = ''
-      isAddingPourCombien.value = false
+    howMuchStore.addHowMuch(newHowMuch.value).then(() => {
+      newHowMuch.value = ''
+      isAddingHowMuch.value = false
 
       displaySuccessMessage.value = true
 
