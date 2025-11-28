@@ -10,7 +10,11 @@
         />
       </NuxtLink>
 
-      <nav class="ml-0 sm:ml-8 hidden sm:flex gap-4 sm:gap-8 items-center" role="navigation">
+      <nav
+        class="ml-0 sm:ml-8 hidden sm:flex gap-4 sm:gap-8 items-center"
+        role="navigation"
+        aria-label="Navigation principale"
+      >
         <NuxtLink active-class="!text-sky-600 underline" class="nav-link" to="/trousse">
           Trousse
         </NuxtLink>
@@ -25,6 +29,10 @@
 
         <NuxtLink active-class="!text-rose-600 underline" class="nav-link" to="/ten-but">
           C'est un 10 mais...
+        </NuxtLink>
+
+        <NuxtLink active-class="!text-violet-600 underline" class="nav-link" to="/how-much">
+          Pour combien
         </NuxtLink>
       </nav>
 
