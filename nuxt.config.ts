@@ -1,5 +1,7 @@
+import { defineNuxtConfig } from 'nuxt/config'
+
 export default defineNuxtConfig({
-  compatibilityDate: '2025-11-28',
+  compatibilityDate: '2023-11-28',
 
   modules: ['@nuxtjs/tailwindcss', '@vite-pwa/nuxt', '@pinia/nuxt'],
 
@@ -14,10 +16,6 @@ export default defineNuxtConfig({
       howMuchBinId: process.env.NUXT_PUBLIC_HOWMUCH_BIN_ID || '',
       jsonbinApiKey: process.env.NUXT_PUBLIC_JSONBIN_API_KEY || ''
     }
-  },
-
-  tailwindcss: {
-    configPath: '~/tailwind.config.js'
   },
 
   pwa: {

@@ -42,6 +42,7 @@
     "@nuxtjs/tailwindcss": "^6.14.0",
     "@pinia/nuxt": "^0.11.3",
     "@tailwindcss/forms": "^0.5.10",
+    "@types/node": "^24.10.1",
     "@vite-pwa/nuxt": "^1.1.0",
     "autoprefixer": "^10.4.22",
     "eslint": "^9.39.1",
