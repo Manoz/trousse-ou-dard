@@ -1,13 +1,16 @@
 import { defineStore } from 'pinia'
-import { addContentApi, fetchApi } from '../api/storeApi'
+import { addContentApi, fetchApi } from '~/composables/useStoreApi'
 
-// Map game types to their JSONBin IDs
-const GAME_BIN_IDS = {
-  trousse: import.meta.env.VITE_TROUSSE_BIN_ID,
-  joke: import.meta.env.VITE_JOKE_BIN_ID,
-  prefer: import.meta.env.VITE_PREFER_BIN_ID,
-  ten: import.meta.env.VITE_TEN_BIN_ID,
-  howMuch: import.meta.env.VITE_HOWMUCH_BIN_ID
+// Map game types to their JSONBin IDs - will be populated in the store
+function getGameBinIds() {
+  const config = useRuntimeConfig()
+  return {
+    trousse: config.public.trousseBinId,
+    joke: config.public.jokeBinId,
+    prefer: config.public.preferBinId,
+    ten: config.public.tenBinId,
+    howMuch: config.public.howMuchBinId
+  }
 }
 
 export const useGameStore = defineStore('gameStore', {
@@ -33,6 +36,7 @@ export const useGameStore = defineStore('gameStore', {
   actions: {
     async fetchGameContent(gameType) {
       try {
+        const GAME_BIN_IDS = getGameBinIds()
         const binId = GAME_BIN_IDS[gameType]
         if (!binId) {
           throw new Error(`Unknown game type: ${gameType}`)
@@ -56,6 +60,7 @@ export const useGameStore = defineStore('gameStore', {
     },
 
     async addGameContent(gameType, newContent) {
+      const GAME_BIN_IDS = getGameBinIds()
       const binId = GAME_BIN_IDS[gameType]
       if (!binId) {
         throw new Error(`Unknown game type: ${gameType}`)

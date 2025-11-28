@@ -1,31 +1,39 @@
 <template>
   <div class="max-w-6xl mx-auto px-4 my-4">
     <header class="flex items-center gap-4 mb-10 sm:mb-16">
-      <RouterLink to="/">
+      <NuxtLink to="/">
         <img
           height="32"
           width="32"
-          src="@/assets/trousse.png"
+          src="~/assets/trousse.png"
           alt="Tu veux jouer ? (aller à l'accueil)"
         />
-      </RouterLink>
+      </NuxtLink>
 
-      <nav class="ml-0 sm:ml-8 hidden sm:flex gap-4 sm:gap-8 items-center" role="navigation">
-        <RouterLink active-class="!text-sky-600 underline" class="nav-link" to="/trousse">
+      <nav
+        class="ml-0 sm:ml-8 hidden sm:flex gap-4 sm:gap-8 items-center"
+        role="navigation"
+        aria-label="Navigation principale"
+      >
+        <NuxtLink active-class="!text-sky-600 underline" class="nav-link" to="/trousse">
           Trousse
-        </RouterLink>
+        </NuxtLink>
 
-        <RouterLink active-class="!text-teal-600 underline" class="nav-link" to="/joke">
+        <NuxtLink active-class="!text-teal-600 underline" class="nav-link" to="/joke">
           Jokes
-        </RouterLink>
+        </NuxtLink>
 
-        <RouterLink active-class="!text-amber-600 underline" class="nav-link" to="/prefer">
+        <NuxtLink active-class="!text-amber-600 underline" class="nav-link" to="/prefer">
           Tu préfères
-        </RouterLink>
+        </NuxtLink>
 
-        <RouterLink active-class="!text-rose-600 underline" class="nav-link" to="/ten-but">
+        <NuxtLink active-class="!text-rose-600 underline" class="nav-link" to="/ten-but">
           C'est un 10 mais...
-        </RouterLink>
+        </NuxtLink>
+
+        <NuxtLink active-class="!text-violet-600 underline" class="nav-link" to="/how-much">
+          Pour combien
+        </NuxtLink>
       </nav>
 
       <a
@@ -50,15 +58,11 @@
       </a>
     </header>
 
-    <img class="hidden sm:block h-10 mx-auto mb-6 sm:mb-12" src="@/assets/trousse.png" alt="" />
+    <img class="hidden sm:block h-10 mx-auto mb-6 sm:mb-12" src="~/assets/trousse.png" alt="" />
 
-    <RouterView />
+    <NuxtPage />
   </div>
 </template>
-
-<script setup>
-import { RouterLink, RouterView } from 'vue-router'
-</script>
 
 <style scoped>
 .nav-link {

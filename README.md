@@ -33,11 +33,11 @@ The app uses [jsonbin.io](https://jsonbin.io) to store the data.
 
 1. Simply go to https://jsonbin.io/ and create a new account.
 2. Go to https://jsonbin.io/app/app/api-keys then create and copy your API key. In my case I use the `X-ACCESS-KEY`.
-3. Copy the token and add it to your `.env` file. Don't forget to escape the `$` character. So for example if JSOnbin gives you the following token: `$5f$42$xxxxxxx`, you should escape it like this: `\$5f\$42\$xxxxxxx`.  
+3. Copy the token and add it to your `.env` file. With Nuxt, you don't need to escape the `$` character.
    Your `.env` file should look like this:
 
 ```
-VITE_JSONBIN_API_KEY="\$5f\$42\$xxxxxxx"
+NUXT_PUBLIC_JSONBIN_API_KEY="$5f$42$xxxxxxx"
 ```
 
 4. Now create your own bin and copy the bin ID to your `.env` file.
@@ -45,12 +45,12 @@ VITE_JSONBIN_API_KEY="\$5f\$42\$xxxxxxx"
 Your final `.env` file should look like this:
 
 ```
-VITE_TROUSSE_BIN_ID="xxxxxx"
-VITE_JOKE_BIN_ID="xxxxxx"
-VITE_PREFER_BIN_ID="xxxxxx"
-VITE_TEN_BIN_ID="xxxxxx"
-VITE_HOWMUCH_BIN_ID"xxxxxx"
-VITE_JSONBIN_API_KEY="\$5f\$42\$xxxxxxx"
+NUXT_PUBLIC_TROUSSE_BIN_ID="xxxxxx"
+NUXT_PUBLIC_JOKE_BIN_ID="xxxxxx"
+NUXT_PUBLIC_PREFER_BIN_ID="xxxxxx"
+NUXT_PUBLIC_TEN_BIN_ID="xxxxxx"
+NUXT_PUBLIC_HOWMUCH_BIN_ID="xxxxxx"
+NUXT_PUBLIC_JSONBIN_API_KEY="$5f$42$xxxxxxx"
 ```
 
 The JSON structure of the bins should be the following:
@@ -79,7 +79,7 @@ yarn lint:fix
 
 ## Deployment
 
-My app is deployed on [Vercel](https://vercel.com/) but feel free to use whatever you want. Just add the environment variables to your deployment environment. Be careful tho, on Vercel I don't need to escape the `$` character. It might be different on other platforms.
+My app is deployed on [Vercel](https://vercel.com/) but feel free to use whatever you want. Just add the environment variables to your deployment environment using the `NUXT_PUBLIC_` prefix (e.g., `NUXT_PUBLIC_TROUSSE_BIN_ID`). The `$` character does not need to be escaped on Vercel or in Nuxt `.env` files.
 
 ## Contributing
 

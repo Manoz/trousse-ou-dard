@@ -1,0 +1,88 @@
+import { defineNuxtConfig } from 'nuxt/config'
+
+export default defineNuxtConfig({
+  compatibilityDate: '2023-11-28',
+
+  modules: ['@nuxtjs/tailwindcss', '@vite-pwa/nuxt', '@pinia/nuxt'],
+
+  css: ['~/assets/main.css'],
+
+  runtimeConfig: {
+    public: {
+      trousseBinId: process.env.NUXT_PUBLIC_TROUSSE_BIN_ID || '',
+      jokeBinId: process.env.NUXT_PUBLIC_JOKE_BIN_ID || '',
+      preferBinId: process.env.NUXT_PUBLIC_PREFER_BIN_ID || '',
+      tenBinId: process.env.NUXT_PUBLIC_TEN_BIN_ID || '',
+      howMuchBinId: process.env.NUXT_PUBLIC_HOWMUCH_BIN_ID || '',
+      jsonbinApiKey: process.env.NUXT_PUBLIC_JSONBIN_API_KEY || ''
+    }
+  },
+
+  pwa: {
+    registerType: 'autoUpdate',
+    manifest: {
+      name: 'Trousse ou Dard',
+      short_name: 'Trousse',
+      description: 'Trousse ou Dard',
+      theme_color: '#e2001a',
+      icons: [
+        {
+          src: '/android-chrome-192x192.png',
+          sizes: '192x192',
+          type: 'image/png'
+        },
+        {
+          src: '/android-chrome-512x512.png',
+          sizes: '512x512',
+          type: 'image/png'
+        }
+      ]
+    },
+    workbox: {
+      cleanupOutdatedCaches: true,
+      globPatterns: ['**/*.{js,css,html,ico,png,svg,json,vue,txt,woff2}'],
+      navigateFallback: undefined,
+      runtimeCaching: [
+        {
+          urlPattern: /^https:\/\/api\.jsonbin\.io\/.*/i,
+          handler: 'NetworkFirst',
+          options: {
+            cacheName: 'jsonbin-api-cache',
+            expiration: {
+              maxEntries: 10,
+              maxAgeSeconds: 60 * 60 * 24 // 24 hours
+            },
+            cacheableResponse: {
+              statuses: [200]
+            }
+          }
+        }
+      ]
+    }
+  },
+
+  app: {
+    head: {
+      title: 'Trousse ou Dard',
+      meta: [
+        {
+          name: 'description',
+          content: 'A little app with silly games just for parties with my buddies'
+        },
+        { charset: 'utf-8' },
+        { name: 'viewport', content: 'width=device-width, initial-scale=1' }
+      ],
+      htmlAttrs: {
+        lang: 'fr'
+      },
+      link: [
+        {
+          rel: 'stylesheet',
+          href: 'https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;500;600&display=swap'
+        }
+      ]
+    }
+  },
+
+  devtools: { enabled: true }
+})

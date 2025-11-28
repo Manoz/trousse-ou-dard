@@ -10,7 +10,14 @@ export default [
   },
   {
     name: 'app/files-to-ignore',
-    ignores: ['**/dist/**', '**/dist-ssr/**', '**/coverage/**', '**/node_modules/**']
+    ignores: [
+      '**/dist/**',
+      '**/dist-ssr/**',
+      '**/coverage/**',
+      '**/node_modules/**',
+      '**/.nuxt/**',
+      '**/.output/**'
+    ]
   },
   js.configs.recommended,
   ...pluginVue.configs['flat/essential'],
@@ -20,7 +27,16 @@ export default [
     languageOptions: {
       globals: {
         ...globals.browser,
-        ...globals.node
+        ...globals.node,
+        // Nuxt auto-imports
+        useRuntimeConfig: 'readonly',
+        defineNuxtConfig: 'readonly',
+        navigateTo: 'readonly',
+        useState: 'readonly',
+        useFetch: 'readonly',
+        useAsyncData: 'readonly',
+        useRoute: 'readonly',
+        useRouter: 'readonly'
       }
     }
   },
