@@ -104,6 +104,21 @@ JSONBin data structure:
 - Responsive design with mobile-first approach (hidden nav on mobile)
 - Prettier config: single quotes, no semicolons, 2-space tabs, 100 char line width
 
+### PWA Configuration
+
+**Important**: The app uses `@vite-pwa/nuxt` with a specific Workbox configuration to avoid service worker errors.
+
+**Known Issue**: With Nuxt in SSR mode (default), you must set `navigateFallback: undefined` to prevent "non-precached-url" errors in the console. The HTML routes are not statically generated in SSR mode and cannot be precached.
+
+**Runtime Caching**: The JSONBin.io API is cached using NetworkFirst strategy with:
+
+- Cache name: `jsonbin-api-cache`
+- Max entries: 10
+- Max age: 24 hours
+- This provides offline fallback and improves performance
+
+See `nuxt.config.ts` → `pwa.workbox` for the complete configuration.
+
 ## Code Quality
 
 **ESLint Configuration** (`eslint.config.js`):

@@ -40,7 +40,24 @@ export default defineNuxtConfig({
     },
     workbox: {
       cleanupOutdatedCaches: true,
-      globPatterns: ['**/*.{js,css,html,ico,png,svg,json,vue,txt,woff2}']
+      globPatterns: ['**/*.{js,css,html,ico,png,svg,json,vue,txt,woff2}'],
+      navigateFallback: undefined,
+      runtimeCaching: [
+        {
+          urlPattern: /^https:\/\/api\.jsonbin\.io\/.*/i,
+          handler: 'NetworkFirst',
+          options: {
+            cacheName: 'jsonbin-api-cache',
+            expiration: {
+              maxEntries: 10,
+              maxAgeSeconds: 60 * 60 * 24 // 24 hours
+            },
+            cacheableResponse: {
+              statuses: [200]
+            }
+          }
+        }
+      ]
     }
   },
 
