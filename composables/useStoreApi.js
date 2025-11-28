@@ -1,5 +1,7 @@
-const jsonBinAccessKey = import.meta.env.VITE_JSONBIN_API_KEY
-const headers = { 'X-Access-Key': jsonBinAccessKey }
+function getHeaders() {
+  const config = useRuntimeConfig()
+  return { 'X-Access-Key': config.public.jsonbinApiKey }
+}
 
 /**
  * Fetch content from JSONBin
@@ -9,6 +11,7 @@ const headers = { 'X-Access-Key': jsonBinAccessKey }
  */
 export const fetchApi = async (binId) => {
   try {
+    const headers = getHeaders()
     const fetchData = await fetch(`https://api.jsonbin.io/v3/b/${binId}`, { headers })
       .then((response) => response.json())
       .then((data) => {
@@ -34,6 +37,7 @@ export const fetchApi = async (binId) => {
  */
 export const addContentApi = async (binId, oldContent, newContent) => {
   try {
+    const headers = getHeaders()
     const content = oldContent
     content.push(newContent)
 

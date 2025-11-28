@@ -17,9 +17,11 @@
   },
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "vite build",
-    "preview": "vite preview",
+    "dev": "nuxt dev",
+    "build": "nuxt build",
+    "preview": "nuxt preview",
+    "generate": "nuxt generate",
+    "postinstall": "nuxt prepare",
     "lint": "prettier -c --cache . && eslint . --cache --max-warnings=0",
     "lint:fix": "prettier --write . && eslint . --fix",
     "prepare": "husky"
@@ -34,12 +36,13 @@
     "@headlessui/vue": "^1.7.23",
     "@heroicons/vue": "^2.2.0",
     "pinia": "^3.0.4",
-    "vue": "^3.5.25",
-    "vue-router": "^4.6.3"
+    "vue": "^3.5.25"
   },
   "devDependencies": {
+    "@nuxtjs/tailwindcss": "^6.14.0",
+    "@pinia/nuxt": "^0.11.3",
     "@tailwindcss/forms": "^0.5.10",
-    "@vitejs/plugin-vue": "^6.0.2",
+    "@vite-pwa/nuxt": "^1.1.0",
     "autoprefixer": "^10.4.22",
     "eslint": "^9.39.1",
     "eslint-config-prettier": "^10.1.8",
@@ -48,11 +51,10 @@
     "globals": "^16.5.0",
     "husky": "^9.1.7",
     "lint-staged": "^16.2.7",
+    "nuxt": "^4.2.1",
     "postcss": "^8.5.6",
     "prettier": "^3.7.1",
     "tailwindcss": "^3.3.5",
-    "vite": "^7.2.4",
-    "vite-plugin-pwa": "^1.2.0",
     "vue-eslint-parser": "^10.2.0"
   }
 }
