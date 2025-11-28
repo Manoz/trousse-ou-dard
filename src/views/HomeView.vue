@@ -33,6 +33,12 @@
             link="/ten-but"
             custom-class="focus-within:ring-rose-600"
           />
+          <HomeCard
+            title="Pour combien"
+            desc="Pour combien tu ferais ça ? Mets tes potes face à leurs limites et leur prix. Tout le monde a un tarif."
+            link="/how-much"
+            custom-class="focus-within:ring-violet-600"
+          />
         </div>
       </div>
     </div>
