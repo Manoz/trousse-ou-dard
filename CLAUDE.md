@@ -4,116 +4,148 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-**Trousse ou Dard** is a Vue 3 party game application featuring multiple silly games. Originally a "truth or dare" phrase generator (French puns: "Trousse" = Truth, "Dard" = Dare), it has evolved to include several games:
-- Trousse (truth questions for "Hot Ones" parties)
-- Jokes de papa (dad jokes)
-- Prefer (would you rather)
-- Ten But (10/10 but...)
-- How Much (pour combien - "for how much")
+**Trousse ou Dard** is a Vue 3 party games app featuring multiple silly games:
+
+- **Trousse**: Truth or Dare questions (originally for "Hot Ones" parties)
+- **Joke**: Dad jokes ("jokes de papa")
+- **Prefer**: "Would you rather" questions
+- **Ten But**: "10 but..." game
+- **How Much**: "Pour combien" (How much would you...) game
+
+All game content is stored remotely on JSONBin.io and fetched at runtime.
 
 ## Development Commands
 
 ```bash
-# Start development server
+# Install dependencies
+yarn
+
+# Run dev server
 yarn dev
 
 # Build for production
-vite build
+yarn build
 
 # Preview production build
 yarn preview
 
-# Linting and formatting
-yarn lint          # Run ESLint with auto-fix
-yarn format        # Format with Prettier
+# Run linting (checks only)
+yarn lint
+
+# Run linting with auto-fix
+yarn lint:fix
 ```
 
 ## Architecture
 
-### Tech Stack
-- **Framework**: Vue 3 (Composition API with `<script setup>`)
-- **State Management**: Pinia stores
-- **Routing**: Vue Router
-- **Styling**: Tailwind CSS with custom theme colors (`base: #284b63`, `mainBg: #f8f8f8`)
-- **UI Components**: Headless UI (for modals/dialogs)
-- **Icons**: Heroicons
-- **Build Tool**: Vite
-- **PWA**: vite-plugin-pwa (auto-update, service worker)
+### State Management Pattern
 
-### Data Storage Pattern
-All game data is stored in JSONBin.io (remote JSON storage):
-- Each game has its own bin ID defined in environment variables
-- Data structure: `{ "content": ["item1", "item2", ...] }`
-- API wrapper in `src/api/storeApi.js` handles fetch/update operations
+The app uses a **unified Pinia store** (`src/stores/games.js`) that manages all game types through a single store. This replaced the original approach of having separate stores for each game.
 
-### Store Pattern
-Each game follows the same Pinia store pattern (`src/stores/`):
-- `state`: Contains `phrases`/`jokes`/etc array and `loaded` boolean
-- `fetchPhrases()`: Calls `fetchApi()` from storeApi.js
-- `getPhrases()`: Only fetches if not already loaded (caching)
-- `addPhrase()`: Calls `addContentApi()` to append new content
+**Key pattern:**
 
-Example stores: `phrases.js`, `jokes.js`, `prefer.js`, `ten-but.js`, `how-much.js`
+- All games share the same data structure: `{ content: [], loaded: false }`
+- Game types are identified by string keys: `'trousse'`, `'joke'`, `'prefer'`, `'ten'`, `'howMuch'`
+- Each game type maps to a specific JSONBin ID via the `GAME_BIN_IDS` constant
+- The store provides generic getters and actions that work with any game type
 
-### View Pattern
-All game views (`src/views/`) follow a consistent pattern:
-1. Display random item from store
-2. Button to get another random item (avoiding duplicates until all shown)
-3. Modal to add new content
-4. Modal to view all content
-5. Uses shared components: `ButtonPrimary`, `ButtonOutline`, `ModalForm`
+**Store API:**
 
-Random display logic:
-- Tracks shown items in `displayedPhrases` ref
-- Filters out already-shown items
-- Resets when all items displayed
+```javascript
+// Actions
+await loadGameContent(gameType) // Load content from API if not already loaded
+await addGameContent(gameType, newContent) // Add new content and sync to API
 
-### Routing
-- Home view (`/`) - eager loaded
-- All game views - lazy loaded with `() => import()`
-- Routes: `/trousse`, `/joke`, `/prefer`, `/ten-but`, `/how-much`
-
-### Reusable Components (`src/components/`)
-- `ButtonPrimary` - Primary action button with customizable colors
-- `ButtonOutline` - Secondary outline button
-- `ModalForm` - Headless UI modal wrapper
-- `HomeCard` - Card component for home menu
-
-## Environment Variables
-
-Required `.env` variables (see README for setup):
-```
-VITE_TROUSSE_BIN_ID="xxxxxx"     # Trousse game bin
-VITE_JOKE_BIN_ID="xxxxxx"         # Jokes game bin
-VITE_PREFER_BIN_ID="xxxxxx"       # Prefer game bin
-VITE_TEN_BIN_ID="xxxxxx"          # Ten But game bin
-VITE_JSONBIN_API_KEY="$xx$xx$xxx" # JSONBin API access key
+// Getters
+getGameContent(gameType) // Returns content array
+isGameLoaded(gameType) // Returns loaded status
 ```
 
-**Important**: When setting up locally, escape `$` characters in `.env` file (e.g., `\$5f\$42\$xxx`). On Vercel deployment, escaping is not needed.
+### Data Flow
 
-## Adding a New Game
+1. **View Component** (e.g., `TrousseView.vue`) calls `loadGameContent('trousse')` on mount
+2. **Game Store** checks if content is already loaded (to avoid duplicate fetches)
+3. **API Layer** (`src/api/storeApi.js`) fetches from JSONBin.io using the bin ID
+4. **Store** updates state with content and marks game as loaded
+5. **View** accesses content via `getGameContent('trousse')` getter
 
-To add a new game, follow the existing pattern:
+### Adding New Games
 
-1. Create new bin on JSONBin.io with structure: `{"content": []}`
-2. Add bin ID to `.env`: `VITE_NEWGAME_BIN_ID="xxxxx"`
-3. Create Pinia store in `src/stores/newgame.js` (copy from `phrases.js`)
-4. Create view in `src/views/NewGameView.vue` (copy from `TrousseView.vue`)
-5. Add route to `src/router/index.js`
-6. Add card to `HomeView.vue` using `HomeCard` component
+To add a new game type:
 
-## Code Style
+1. Add the bin ID to `GAME_BIN_IDS` in `src/stores/games.js`
+2. Add the game state to the `games` object in store state
+3. Add the environment variable `VITE_NEWGAME_BIN_ID` to `.env`
+4. Create a view component in `src/views/` that uses the store pattern
+5. Add a route in `src/router/index.js`
+6. Add a card to `HomeView.vue` using the `HomeCard` component
 
-- Uses ESLint with `@novius/eslint-config-vue`
-- Prettier for formatting
-- Husky + lint-staged for pre-commit hooks
-- Tailwind utility classes for all styling (no custom CSS)
-- Composition API with `<script setup>` syntax
-- Path alias: `@` maps to `src/`
+### Environment Variables
 
-## Deployment
+The app requires these environment variables in `.env`:
 
-- Deployed on Vercel
-- Environment variables must be set in Vercel dashboard
-- PWA auto-updates on new deployments
+```
+VITE_TROUSSE_BIN_ID="xxxxxx"
+VITE_JOKE_BIN_ID="xxxxxx"
+VITE_PREFER_BIN_ID="xxxxxx"
+VITE_TEN_BIN_ID="xxxxxx"
+VITE_HOWMUCH_BIN_ID="xxxxxx"
+VITE_JSONBIN_API_KEY="\$5f\$42\$xxxxxxx"  # Note: $ must be escaped in .env
+```
+
+**Important:** On Vercel deployment, the `$` character in the API key does NOT need to be escaped.
+
+### JSONBin.io Integration
+
+All game content follows this JSON structure in JSONBin:
+
+```json
+{
+  "content": ["phrase 1", "phrase 2", "phrase 3"]
+}
+```
+
+API interactions are handled by two functions in `src/api/storeApi.js`:
+
+- `fetchApi(binId)` - GET request to retrieve content
+- `addContentApi(binId, oldContent, newContent)` - PUT request to add new content
+
+### Component Structure
+
+- **Views** (`src/views/`) - Route-level components for each game, handle store interactions
+- **Reusable Components** (`src/components/`):
+  - `HomeCard.vue` - Game cards on home page
+  - `ButtonPrimary.vue` / `ButtonOutline.vue` - Styled button components
+  - `ModalForm.vue` - Modal for adding new content
+
+### Styling
+
+- Uses **Tailwind CSS** with custom configuration
+- TailwindCSS Forms plugin for form styling
+- HeadlessUI for accessible UI components (modals, transitions)
+- Heroicons for icons
+
+### PWA Configuration
+
+The app is configured as a Progressive Web App using `vite-plugin-pwa`:
+
+- Auto-updates on new versions
+- Caches static assets (JS, CSS, HTML, images, fonts)
+- Manifest configured for Android installation
+- Theme color: `#e2001a`
+
+### Code Quality
+
+- **ESLint 9** with flat config format (`eslint.config.js`)
+- Vue-specific rules via `eslint-plugin-vue`
+- **Prettier** for code formatting
+- Pre-commit hooks via **Husky** + **lint-staged** to enforce linting and formatting
+- All code must pass linting with zero warnings (`--max-warnings=0`)
+
+### Router Configuration
+
+Uses Vue Router with:
+
+- Web history mode
+- Lazy-loaded routes (except home) for better performance
+- Route paths: `/`, `/trousse`, `/joke`, `/prefer`, `/ten-but`, `/how-much`
