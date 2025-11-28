@@ -46,6 +46,15 @@ export default defineNuxtConfig({
 
   app: {
     head: {
+      title: 'Trousse ou Dard',
+      meta: [
+        {
+          name: 'description',
+          content: 'A little app with silly games just for parties with my buddies'
+        },
+        { charset: 'utf-8' },
+        { name: 'viewport', content: 'width=device-width, initial-scale=1' }
+      ],
       htmlAttrs: {
         lang: 'fr'
       },
