@@ -4,7 +4,6 @@ import { VitePWA } from 'vite-plugin-pwa'
 import vue from '@vitejs/plugin-vue'
 
 export default defineConfig(({ mode }) => {
-   
   const env = loadEnv(mode, process.cwd(), '')
 
   return {

@@ -58,7 +58,7 @@
               :disabled="isAddingPhrase"
               class="block w-full border-0 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-sky-600 sm:text-sm sm:leading-6"
               :class="{ 'opacity-50 cursor-not-allowed': isAddingPhrase }"
-            >
+            />
           </div>
 
           <ButtonPrimary
@@ -88,11 +88,7 @@
         <template #default>
           <div class="mb-4 mt-2">
             <ul class="pl-4 list-outside list-disc">
-              <li
-                class="py-0.5"
-                v-for="phrase in phraseStore.phrases"
-                :key="phrase"
-              >
+              <li class="py-0.5" v-for="phrase in phrases" :key="phrase">
                 <p class="text-gray-900">
                   {{ phrase }}
                 </p>
@@ -106,13 +102,13 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
-import { usePhraseStore } from '@/stores/phrases'
+import { ref, onMounted, computed } from 'vue'
+import { useGameStore } from '@/stores/games'
 import ModalForm from '@/components/ModalForm.vue'
 import ButtonPrimary from '@/components/ButtonPrimary.vue'
 import ButtonOutline from '@/components/ButtonOutline.vue'
 
-const phraseStore = usePhraseStore()
+const gameStore = useGameStore()
 const currentPhrase = ref('')
 const displayedPhrases = ref([])
 const newPhrase = ref('')
@@ -121,21 +117,21 @@ const isModalAllOpen = ref(false)
 const isAddingPhrase = ref(false)
 const displaySuccessMessage = ref(false)
 
+const phrases = computed(() => gameStore.getGameContent('trousse'))
+
 onMounted(async () => {
-  await phraseStore.getPhrases()
+  await gameStore.loadGameContent('trousse')
   displayRandomPhrase()
 })
 
 const displayRandomPhrase = () => {
   // Filter to get only phrases that have not been displayed yet
-  const unshownPhrases = phraseStore.phrases.filter(
-    (phrase) => !displayedPhrases.value.includes(phrase)
-  )
+  const unshownPhrases = phrases.value.filter((phrase) => !displayedPhrases.value.includes(phrase))
 
   // If all phrases have been displayed, reset the list
   if (unshownPhrases.length === 0) {
     displayedPhrases.value = []
-    phraseStore.getPhrases()
+    gameStore.loadGameContent('trousse')
     return
   }
 
@@ -151,7 +147,7 @@ const addNewPhrase = () => {
   if (newPhrase.value) {
     isAddingPhrase.value = true
 
-    phraseStore.addPhrase(newPhrase.value).then(() => {
+    gameStore.addGameContent('trousse', newPhrase.value).then(() => {
       newPhrase.value = ''
       isAddingPhrase.value = false
 

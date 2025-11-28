@@ -58,7 +58,7 @@
               :disabled="isAddingTen"
               class="block w-full border-0 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-rose-600 sm:text-sm sm:leading-6"
               :class="{ 'opacity-50 cursor-not-allowed': isAddingTen }"
-            >
+            />
           </div>
 
           <ButtonPrimary
@@ -88,11 +88,7 @@
         <template #default>
           <div class="mb-4 mt-2">
             <ul class="pl-4 list-outside list-disc">
-              <li
-                class="py-0.5"
-                v-for="ten in tenStore.tens"
-                :key="ten"
-              >
+              <li class="py-0.5" v-for="ten in tens" :key="ten">
                 <p class="text-gray-900">
                   {{ ten }}
                 </p>
@@ -106,13 +102,13 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
-import { useTenStore } from '@/stores/ten-but'
+import { ref, onMounted, computed } from 'vue'
+import { useGameStore } from '@/stores/games'
 import ModalForm from '@/components/ModalForm.vue'
 import ButtonPrimary from '@/components/ButtonPrimary.vue'
 import ButtonOutline from '@/components/ButtonOutline.vue'
 
-const tenStore = useTenStore()
+const gameStore = useGameStore()
 const currentTen = ref('')
 const displayedTens = ref([])
 const newTen = ref("C'est un 10 mais ")
@@ -121,19 +117,21 @@ const isModalAllOpen = ref(false)
 const isAddingTen = ref(false)
 const displaySuccessMessage = ref(false)
 
+const tens = computed(() => gameStore.getGameContent('ten'))
+
 onMounted(async () => {
-  await tenStore.getTens()
+  await gameStore.loadGameContent('ten')
   displayRandomTen()
 })
 
 const displayRandomTen = () => {
   // Filter to get only tens that have not been displayed yet
-  const unshownTens = tenStore.tens.filter((ten) => !displayedTens.value.includes(ten))
+  const unshownTens = tens.value.filter((ten) => !displayedTens.value.includes(ten))
 
   // If all tens have been displayed, reset the list
   if (unshownTens.length === 0) {
     displayedTens.value = []
-    tenStore.getTens()
+    gameStore.loadGameContent('ten')
     return
   }
 
@@ -149,7 +147,7 @@ const addNewTen = () => {
   if (newTen.value) {
     isAddingTen.value = true
 
-    tenStore.addTen(newTen.value).then(() => {
+    gameStore.addGameContent('ten', newTen.value).then(() => {
       newTen.value = ''
       isAddingTen.value = false
 

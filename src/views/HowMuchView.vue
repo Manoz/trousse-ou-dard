@@ -26,7 +26,7 @@
         <ButtonOutline
           border-class="border-violet-600"
           focus-class="focus-visible:outline-violet-600"
-          label="Ajouter un &quot;Pour combien&quot;"
+          label='Ajouter un "Pour combien"'
           @click="isModalOpen = true"
         />
       </div>
@@ -35,13 +35,13 @@
         <ButtonPrimary
           bg-class="bg-gray-500"
           focus-class="focus-visible:outline-gray-500"
-          label="Voir tous les &quot;Pour combien&quot;"
+          label='Voir tous les "Pour combien"'
           @click="isModalAllOpen = true"
         />
       </div>
 
       <ModalForm
-        modal-title="Ajouter un &quot;Pour combien&quot;"
+        modal-title='Ajouter un "Pour combien"'
         :is-open="isModalOpen"
         custom-focus-class="focus:ring-violet-500"
         @update:is-open="isModalOpen = $event"
@@ -58,7 +58,7 @@
               :disabled="isAddingHowMuch"
               class="block w-full border-0 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-violet-600 sm:text-sm sm:leading-6"
               :class="{ 'opacity-50 cursor-not-allowed': isAddingHowMuch }"
-            >
+            />
           </div>
 
           <ButtonPrimary
@@ -79,7 +79,7 @@
       </ModalForm>
 
       <ModalForm
-        modal-title="Tous les &quot;Pour combien&quot;"
+        modal-title='Tous les "Pour combien"'
         :is-open="isModalAllOpen"
         custom-focus-class="focus:ring-violet-500"
         size="lg"
@@ -88,11 +88,7 @@
         <template #default>
           <div class="mb-4 mt-2">
             <ul class="pl-4 list-outside list-disc">
-              <li
-                class="py-0.5"
-                v-for="howMuch in howMuchStore.howMuchs"
-                :key="howMuch"
-              >
+              <li class="py-0.5" v-for="howMuch in howMuchs" :key="howMuch">
                 <p class="text-gray-900">
                   {{ howMuch }}
                 </p>
@@ -106,13 +102,13 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
-import { useHowMuchStore } from '@/stores/how-much'
+import { ref, onMounted, computed } from 'vue'
+import { useGameStore } from '@/stores/games'
 import ModalForm from '@/components/ModalForm.vue'
 import ButtonPrimary from '@/components/ButtonPrimary.vue'
 import ButtonOutline from '@/components/ButtonOutline.vue'
 
-const howMuchStore = useHowMuchStore()
+const gameStore = useGameStore()
 const currentHowMuch = ref('')
 const displayedHowMuchs = ref([])
 const newHowMuch = ref('')
@@ -121,21 +117,23 @@ const isModalAllOpen = ref(false)
 const isAddingHowMuch = ref(false)
 const displaySuccessMessage = ref(false)
 
+const howMuchs = computed(() => gameStore.getGameContent('howMuch'))
+
 onMounted(async () => {
-  await howMuchStore.getHowMuchs()
+  await gameStore.loadGameContent('howMuch')
   displayRandomHowMuch()
 })
 
 const displayRandomHowMuch = () => {
   // Filter to get only HowMuchs that have not been displayed yet
-  const unshownHowMuchs = howMuchStore.howMuchs.filter(
+  const unshownHowMuchs = howMuchs.value.filter(
     (howMuch) => !displayedHowMuchs.value.includes(howMuch)
   )
 
   // If all HowMuchs have been displayed, reset the list
   if (unshownHowMuchs.length === 0) {
     displayedHowMuchs.value = []
-    howMuchStore.getHowMuchs()
+    gameStore.loadGameContent('howMuch')
     return
   }
 
@@ -151,7 +149,7 @@ const addNewHowMuch = () => {
   if (newHowMuch.value) {
     isAddingHowMuch.value = true
 
-    howMuchStore.addHowMuch(newHowMuch.value).then(() => {
+    gameStore.addGameContent('howMuch', newHowMuch.value).then(() => {
       newHowMuch.value = ''
       isAddingHowMuch.value = false
 

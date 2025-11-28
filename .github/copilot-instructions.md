@@ -2,93 +2,117 @@
 
 ## Project Overview
 
-Vue 3 party game app with multiple mini-games. Each game displays random content from JSONBin.io and allows users to add new items.
+Vue 3 party games app featuring 5 games (Trousse, Joke, Prefer, Ten But, How Much). All content is stored remotely on JSONBin.io. Built with Vite, Vue Router, Pinia, Tailwind CSS, and Headless UI.
 
-## Tech Stack
+## Critical Architecture Pattern: Unified Game Store
 
-- **Vue 3** with Composition API (`<script setup>`)
-- **Pinia** for state management
-- **Vue Router** with lazy-loaded game views
-- **Tailwind CSS** with custom colors (`base: #284b63`, `mainBg: #f8f8f8`)
-- **Headless UI** for modals, **Heroicons** for icons
-- **Vite** + **vite-plugin-pwa**
+**The app uses a single Pinia store (`src/stores/games.js`) for all game types**.
 
-## Commands
-
-```bash
-yarn dev      # Start dev server
-yarn build    # Production build (uses vite build directly)
-yarn lint     # ESLint with auto-fix
-yarn format   # Prettier formatting
-```
-
-## Architecture Patterns
-
-### Data Flow: JSONBin.io Integration
-
-All game data stored remotely in JSONBin.io bins. API wrapper in `src/api/storeApi.js`:
-
-- `fetchApi(binId)` - GET content array from bin
-- `addContentApi(binId, oldContent, newContent)` - PUT updated array
-
-Bin IDs configured via env vars: `VITE_TROUSSE_BIN_ID`, `VITE_JOKE_BIN_ID`, etc.
-
-### Store Pattern (src/stores/)
-
-Each game has identical store structure. Follow `phrases.js` as template:
+All games share the same data structure:
 
 ```javascript
-state: () => ({ phrases: [], loaded: false })
-// getPhrases() - fetch only if not loaded (caching)
-// addPhrase(newPhrase) - append via addContentApi
+games: {
+  trousse: { content: [], loaded: false },
+  joke: { content: [], loaded: false }
+  // ... etc
+}
 ```
 
-### View Pattern (src/views/)
+Game types are string keys: `'trousse'`, `'joke'`, `'prefer'`, `'ten'`, `'howMuch'`
 
-All game views follow the same UX pattern - see `TrousseView.vue` as reference:
+**Store API pattern used in all game views:**
 
-1. Display random item, track shown items in `displayedPhrases` ref
-2. Filter out shown items until all displayed, then reset
-3. Two modals: add new content + view all content
-4. Use `ButtonPrimary`, `ButtonOutline`, `ModalForm` components
-
-### Component Styling Convention
-
-Buttons accept dynamic Tailwind classes via props for theming per game:
-
-```vue
-<ButtonPrimary bg-class="bg-sky-600" focus-class="focus-visible:outline-sky-600" />
+```javascript
+// In view component onMounted
+await gameStore.loadGameContent('trousse') // Auto-checks if loaded
+const phrases = computed(() => gameStore.getGameContent('trousse'))
+await gameStore.addGameContent('trousse', newPhrase)
 ```
 
-### Routing
+## Adding New Games
 
-- Home view (`/`) - eagerly loaded
-- Game views - lazy loaded: `component: () => import('../views/GameView.vue')`
-
-## Adding a New Game
-
-1. Create JSONBin.io bin with `{"content": []}`
-2. Add `VITE_NEWGAME_BIN_ID` to `.env`
-3. Create store in `src/stores/` following `phrases.js` pattern
-4. Create view in `src/views/` following `TrousseView.vue` pattern
+1. Add bin ID to `GAME_BIN_IDS` in `src/stores/games.js`
+2. Add game state to `games` object in store
+3. Add `VITE_NEWGAME_BIN_ID` to `.env` (**escape `$` as `\$` in .env only**, not on Vercel)
+4. Create view in `src/views/` using the store pattern (see `TrousseView.vue`)
 5. Add lazy-loaded route in `src/router/index.js`
-6. Add card to `HomeView.vue`
+6. Add `<HomeCard>` to `HomeView.vue`
 
-## Environment Setup
+## JSONBin.io Integration
 
-Required `.env` file (escape `$` locally, not on Vercel):
+All bins must follow this structure:
 
-```
-VITE_TROUSSE_BIN_ID="xxxxx"
-VITE_JOKE_BIN_ID="xxxxx"
-VITE_PREFER_BIN_ID="xxxxx"
-VITE_TEN_BIN_ID="xxxxx"
-VITE_HOW_MUCH_BIN_ID="xxxxx"
-VITE_JSONBIN_API_KEY="\$5f\$42\$xxxxx"
+```json
+{
+  "content": ["phrase 1", "phrase 2", ...]
+}
 ```
 
-## Code Style
+API layer (`src/api/storeApi.js`) handles fetch/update using `X-Access-Key` header.
 
-- Use `@/` alias for imports from `src/`
-- French UI text (this is a French party game)
-- Husky + lint-staged runs on commit
+## Development Workflows
+
+```bash
+yarn dev # Dev server
+yarn lint # Check with ESLint + Prettier
+yarn lint:fix # Auto-fix linting issues
+yarn build # Production build
+```
+
+**Linting is enforced via Husky pre-commit hooks** using `lint-staged`.
+
+## Component Patterns
+
+**Reusable components** in `src/components/`:
+
+- `HomeCard.vue` - Game cards with `title`, `desc`, `link`, `customClass` props
+- `ButtonPrimary.vue` / `ButtonOutline.vue` - Buttons with customizable `bg-class`, `focus-class`
+- `ModalForm.vue` - Headless UI modal wrapper with `is-open`, `modal-title`, size variants
+
+**View component structure** (see `TrousseView.vue`):
+
+- Load game content in `onMounted`
+- Track displayed items to avoid repeats (`displayedPhrases` ref)
+- Use modals for adding content and viewing all items
+- Handle async state with loading flags (`isAddingPhrase`)
+
+## Styling Conventions
+
+- Tailwind utility classes throughout
+- Custom theme colors: `base: '#284b63'`, `mainBg: '#f8f8f8'`
+- Custom font: `Nunito` (sans-serif)
+- `@tailwindcss/forms` plugin for form styling
+- Color coding per game (sky-600, teal-600, amber-600, rose-600, gray-500)
+- Responsive design with `sm:` breakpoints
+
+## Router Configuration
+
+- Uses `createWebHistory` (not hash mode)
+- Lazy-loaded views via `import()` (except HomeView)
+- Route names match game types for consistency
+
+## Environment Variables
+
+Required in `.env`:
+
+```
+VITE_TROUSSE_BIN_ID="xxxxxx"
+VITE_JOKE_BIN_ID="xxxxxx"
+VITE_PREFER_BIN_ID="xxxxxx"
+VITE_TEN_BIN_ID="xxxxxx"
+VITE_HOWMUCH_BIN_ID="xxxxxx"
+VITE_JSONBIN_API_KEY="\$5f\$42\$xxxxxxx"  # Escape $ in .env
+```
+
+**Important:** Vercel deployment does NOT require escaping `$` character.
+
+## PWA Configuration
+
+Vite PWA plugin configured for auto-update. Manifest in `vite.config.js` with theme color `#e2001a`.
+
+## ESLint Rules
+
+- Flat config format (`eslint.config.js`)
+- `vue/multi-word-component-names`: off
+- Console/debugger warnings in production only
+- Prettier integration via `eslint-config-prettier`

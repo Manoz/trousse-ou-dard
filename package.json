@@ -1,7 +1,7 @@
 {
   "name": "trousse-ou-dard",
   "description": "A little app with silly games just for parties with my buddies.",
-  "version": "1.1.5",
+  "version": "1.1.6",
   "author": {
     "name": "Manoz",
     "email": "manoz@outlook.com",
@@ -20,13 +20,15 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs --fix",
-    "format": "prettier --write src/",
-    "prepare": "husky install"
+    "lint": "prettier -c --cache . && eslint . --cache --max-warnings=0",
+    "lint:fix": "prettier --write . && eslint . --fix",
+    "prepare": "husky"
   },
   "lint-staged": {
-    "**/*.{vue,js}": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs --fix",
-    "src/**/*.{vue,js}": "prettier --write src/"
+    "*": [
+      "prettier -w -u --cache",
+      "eslint --cache --no-warn-ignored --max-warnings=0"
+    ]
   },
   "dependencies": {
     "@headlessui/vue": "^1.7.23",
@@ -36,20 +38,21 @@
     "vue-router": "^4.6.3"
   },
   "devDependencies": {
-    "@novius/eslint-config-vue": "^2.0.2",
-    "@rushstack/eslint-patch": "^1.15.0",
     "@tailwindcss/forms": "^0.5.10",
     "@vitejs/plugin-vue": "^6.0.2",
-    "@vue/eslint-config-prettier": "^10.2.0",
     "autoprefixer": "^10.4.22",
     "eslint": "^9.39.1",
-    "eslint-plugin-import": "^2.32.0",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-prettier": "^5.5.4",
+    "eslint-plugin-vue": "^10.6.2",
+    "globals": "^16.5.0",
     "husky": "^9.1.7",
     "lint-staged": "^16.2.7",
     "postcss": "^8.5.6",
-    "prettier": "^3.6.2",
+    "prettier": "^3.7.1",
     "tailwindcss": "^3.3.5",
     "vite": "^7.2.4",
-    "vite-plugin-pwa": "^1.1.0"
+    "vite-plugin-pwa": "^1.2.0",
+    "vue-eslint-parser": "^10.2.0"
   }
 }

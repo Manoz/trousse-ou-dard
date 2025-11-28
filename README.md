@@ -49,6 +49,7 @@ VITE_TROUSSE_BIN_ID="xxxxxx"
 VITE_JOKE_BIN_ID="xxxxxx"
 VITE_PREFER_BIN_ID="xxxxxx"
 VITE_TEN_BIN_ID="xxxxxx"
+VITE_HOWMUCH_BIN_ID"xxxxxx"
 VITE_JSONBIN_API_KEY="\$5f\$42\$xxxxxxx"
 ```
 
@@ -64,16 +65,16 @@ The JSON structure of the bins should be the following:
 
 This project uses [ESLint](https://eslint.org/) and [Prettier](https://prettier.io/) for linting and formatting.
 
-Use ESLint with:
+Use ESLint and Prettier with:
 
 ```bash
 yarn lint
 ```
 
-Use Prettier with:
+Fix formatting and linting with:
 
 ```bash
-yarn format
+yarn lint:fix
 ```
 
 ## Deployment

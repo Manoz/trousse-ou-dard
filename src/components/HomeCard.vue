@@ -21,7 +21,7 @@
 <script setup>
 import { RouterLink } from 'vue-router'
 
-const props = defineProps({
+defineProps({
   title: {
     type: String,
     required: true

@@ -1,10 +1,6 @@
 <template>
   <TransitionRoot as="template" :show="isOpen">
-    <Dialog
-      as="div"
-      class="relative z-10"
-      @close="closeModal"
-    >
+    <Dialog as="div" class="relative z-10" @close="closeModal">
       <TransitionChild
         as="template"
         enter="ease-out duration-300"
@@ -70,7 +66,7 @@
 import { Dialog, DialogPanel, DialogTitle, TransitionChild, TransitionRoot } from '@headlessui/vue'
 import { XMarkIcon } from '@heroicons/vue/24/outline'
 
-const props = defineProps({
+defineProps({
   isOpen: {
     type: Boolean,
     required: true

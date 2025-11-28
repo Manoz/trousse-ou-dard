@@ -7,39 +7,23 @@
           width="32"
           src="@/assets/trousse.png"
           alt="Tu veux jouer ? (aller à l'accueil)"
-        >
+        />
       </RouterLink>
 
       <nav class="ml-0 sm:ml-8 hidden sm:flex gap-4 sm:gap-8 items-center" role="navigation">
-        <RouterLink
-          active-class="!text-sky-600 underline"
-          class="nav-link"
-          to="/trousse"
-        >
+        <RouterLink active-class="!text-sky-600 underline" class="nav-link" to="/trousse">
           Trousse
         </RouterLink>
 
-        <RouterLink
-          active-class="!text-teal-600 underline"
-          class="nav-link"
-          to="/joke"
-        >
+        <RouterLink active-class="!text-teal-600 underline" class="nav-link" to="/joke">
           Jokes
         </RouterLink>
 
-        <RouterLink
-          active-class="!text-amber-600 underline"
-          class="nav-link"
-          to="/prefer"
-        >
+        <RouterLink active-class="!text-amber-600 underline" class="nav-link" to="/prefer">
           Tu préfères
         </RouterLink>
 
-        <RouterLink
-          active-class="!text-rose-600 underline"
-          class="nav-link"
-          to="/ten-but"
-        >
+        <RouterLink active-class="!text-rose-600 underline" class="nav-link" to="/ten-but">
           C'est un 10 mais...
         </RouterLink>
       </nav>
@@ -66,11 +50,7 @@
       </a>
     </header>
 
-    <img
-      class="hidden sm:block h-10 mx-auto mb-6 sm:mb-12"
-      src="@/assets/trousse.png"
-      alt=""
-    >
+    <img class="hidden sm:block h-10 mx-auto mb-6 sm:mb-12" src="@/assets/trousse.png" alt="" />
 
     <RouterView />
   </div>

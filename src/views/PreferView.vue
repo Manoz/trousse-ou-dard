@@ -26,7 +26,7 @@
         <ButtonOutline
           border-class="border-amber-600"
           focus-class="focus-visible:outline-amber-600"
-          label="Ajouter un &quot;Tu préfères&quot;"
+          label='Ajouter un "Tu préfères"'
           @click="isModalOpen = true"
         />
       </div>
@@ -35,13 +35,13 @@
         <ButtonPrimary
           bg-class="bg-gray-500"
           focus-class="focus-visible:outline-gray-500"
-          label="Voir tous les &quot;Tu préfères&quot;"
+          label='Voir tous les "Tu préfères"'
           @click="isModalAllOpen = true"
         />
       </div>
 
       <ModalForm
-        modal-title="Ajouter un &quot;Tu préfères&quot;"
+        modal-title='Ajouter un "Tu préfères"'
         :is-open="isModalOpen"
         custom-focus-class="focus:ring-amber-500"
         @update:is-open="isModalOpen = $event"
@@ -58,7 +58,7 @@
               :disabled="isAddingPrefer"
               class="block w-full border-0 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-amber-600 sm:text-sm sm:leading-6"
               :class="{ 'opacity-50 cursor-not-allowed': isAddingPrefer }"
-            >
+            />
           </div>
 
           <ButtonPrimary
@@ -79,7 +79,7 @@
       </ModalForm>
 
       <ModalForm
-        modal-title="Tous les &quot;Tu préfères&quot;"
+        modal-title='Tous les "Tu préfères"'
         :is-open="isModalAllOpen"
         custom-focus-class="focus:ring-amber-500"
         size="lg"
@@ -88,11 +88,7 @@
         <template #default>
           <div class="mb-4 mt-2">
             <ul class="pl-4 list-outside list-disc">
-              <li
-                class="py-0.5"
-                v-for="prefer in preferStore.prefers"
-                :key="prefer"
-              >
+              <li class="py-0.5" v-for="prefer in prefers" :key="prefer">
                 <p class="text-gray-900">
                   {{ prefer }}
                 </p>
@@ -106,13 +102,13 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
-import { usePreferStore } from '@/stores/prefer'
+import { ref, onMounted, computed } from 'vue'
+import { useGameStore } from '@/stores/games'
 import ModalForm from '@/components/ModalForm.vue'
 import ButtonPrimary from '@/components/ButtonPrimary.vue'
 import ButtonOutline from '@/components/ButtonOutline.vue'
 
-const preferStore = usePreferStore()
+const gameStore = useGameStore()
 const currentPrefer = ref('')
 const displayedPrefers = ref([])
 const newPrefer = ref('')
@@ -121,21 +117,21 @@ const isModalAllOpen = ref(false)
 const isAddingPrefer = ref(false)
 const displaySuccessMessage = ref(false)
 
+const prefers = computed(() => gameStore.getGameContent('prefer'))
+
 onMounted(async () => {
-  await preferStore.getPrefers()
+  await gameStore.loadGameContent('prefer')
   displayRandomPrefer()
 })
 
 const displayRandomPrefer = () => {
   // Filter to get only Prefers that have not been displayed yet
-  const unshownPrefers = preferStore.prefers.filter(
-    (prefer) => !displayedPrefers.value.includes(prefer)
-  )
+  const unshownPrefers = prefers.value.filter((prefer) => !displayedPrefers.value.includes(prefer))
 
   // If all Prefers have been displayed, reset the list
   if (unshownPrefers.length === 0) {
     displayedPrefers.value = []
-    preferStore.getPrefers()
+    gameStore.loadGameContent('prefer')
     return
   }
 
@@ -151,7 +147,7 @@ const addNewPrefer = () => {
   if (newPrefer.value) {
     isAddingPrefer.value = true
 
-    preferStore.addPrefer(newPrefer.value).then(() => {
+    gameStore.addGameContent('prefer', newPrefer.value).then(() => {
       newPrefer.value = ''
       isAddingPrefer.value = false
 
