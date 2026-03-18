@@ -43,13 +43,15 @@ pnpm run lint:fix      # Auto-fix formatting and linting issues
 ### Project Structure
 
 ```
-/pages/*           - Auto-routed game pages (index, trousse, joke, prefer, ten-but, how-much)
-/components/*      - Reusable Vue components (buttons, modals, cards)
-/stores/games.js   - Centralized Pinia store for all game types
-/composables/useStoreApi.js - JSONBin.io API integration (fetch/add content)
-/assets/           - Static assets and global CSS
-app.vue            - Root layout with navigation header
-nuxt.config.ts     - Nuxt configuration with modules and runtime config
+/pages/*                      - Auto-routed game pages (index, trousse, joke, prefer, ten-but, how-much)
+/components/*                 - Reusable Vue components (buttons, modals, cards)
+/stores/games.js              - Centralized Pinia store for all game types
+/composables/useStoreApi.js   - Internal API client (calls /api/games/[type])
+/server/api/games/[type].get.ts  - Server route: fetch game content from JSONBin
+/server/api/games/[type].post.ts - Server route: add content to JSONBin (with validation)
+/assets/                      - Static assets and global CSS
+app.vue                       - Root layout with navigation header
+nuxt.config.ts                - Nuxt configuration with modules and runtime config
 ```
 
 ### Key Patterns
@@ -60,11 +62,13 @@ nuxt.config.ts     - Nuxt configuration with modules and runtime config
 - Each game has: `content` array and `loaded` boolean
 - Actions: `loadGameContent(gameType)` - loads from API once, `addGameContent(gameType, newContent)` - adds new content
 
-**API Integration** (`composables/useStoreApi.js`):
+**API Integration**:
 
-- `fetchApi(binId)` - GET request to retrieve content array from JSONBin
-- `addContentApi(binId, oldContent, newContent)` - PUT request to update with new content
-- Uses `X-Access-Key` header from runtime config
+All JSONBin.io access goes through server-side routes (`/server/api/games/`). The API key and bin IDs are never exposed to the client.
+
+- `composables/useStoreApi.js` calls `/api/games/[type]` via `$fetch`
+- `server/api/games/[type].get.ts` — proxies GET to JSONBin, returns `content[]`
+- `server/api/games/[type].post.ts` — validates input (non-empty, max 500 chars), fetches current content from JSONBin, appends, then PUTs back
 
 **Game Page Pattern**:
 All game pages follow the same structure:
@@ -78,15 +82,15 @@ All game pages follow the same structure:
 
 ### Environment Variables
 
-Required in `.env` file (all use `NUXT_PUBLIC_` prefix):
+All variables are **server-side only** (no `NUXT_PUBLIC_` prefix). Never move these to `runtimeConfig.public`.
 
 ```
-NUXT_PUBLIC_TROUSSE_BIN_ID=xxxxx
-NUXT_PUBLIC_JOKE_BIN_ID=xxxxx
-NUXT_PUBLIC_PREFER_BIN_ID=xxxxx
-NUXT_PUBLIC_TEN_BIN_ID=xxxxx
-NUXT_PUBLIC_HOWMUCH_BIN_ID=xxxxx
-NUXT_PUBLIC_JSONBIN_API_KEY=$5f$42$xxxxx
+NUXT_JSONBIN_API_KEY=$5f$42$xxxxx
+NUXT_TROUSSE_BIN_ID=xxxxx
+NUXT_JOKE_BIN_ID=xxxxx
+NUXT_PREFER_BIN_ID=xxxxx
+NUXT_TEN_BIN_ID=xxxxx
+NUXT_HOWMUCH_BIN_ID=xxxxx
 ```
 
 JSONBin data structure:
@@ -110,8 +114,9 @@ JSONBin data structure:
 
 **Known Issue**: With Nuxt in SSR mode (default), you must set `navigateFallback: undefined` to prevent "non-precached-url" errors in the console. The HTML routes are not statically generated in SSR mode and cannot be precached.
 
-**Runtime Caching**: The JSONBin.io API is cached using NetworkFirst strategy with:
+**Runtime Caching**: Internal game API routes are cached using NetworkFirst strategy with:
 
+- URL pattern: `/api/games/.*`
 - Cache name: `jsonbin-api-cache`
 - Max entries: 10
 - Max age: 24 hours
@@ -119,13 +124,19 @@ JSONBin data structure:
 
 See `nuxt.config.ts` → `pwa.workbox` for the complete configuration.
 
+### Security
+
+- JSONBin API key and bin IDs are **server-side only** — never put them in `runtimeConfig.public`
+- Input validation on POST: game type whitelist, non-empty string, max 500 characters
+- Security headers set via `routeRules` on all routes: `X-Frame-Options`, `X-Content-Type-Options`, `Referrer-Policy`, `Permissions-Policy`
+
 ## Code Quality
 
 **ESLint Configuration** (`eslint.config.js`):
 
 - Flat config format with Vue plugin
 - Prettier integration (eslint-config-prettier)
-- Custom globals for Nuxt auto-imports (useRuntimeConfig, navigateTo, etc.)
+- Custom globals for Nuxt auto-imports (`useRuntimeConfig`, `$fetch`, `navigateTo`, etc.)
 - Rules: multi-word component names disabled, console/debugger warnings in production
 
 **Git Hooks** (Husky + lint-staged):

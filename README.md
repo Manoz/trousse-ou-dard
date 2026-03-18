@@ -13,73 +13,59 @@
 
 ## Context
 
-**"Trousse ou Dard"** was originally a generator of "truth or dare" phrases (but only "truths") that we can use for a "Hot Ones" party with my friends.  
+**"Trousse ou Dard"** was originally a generator of "truth or dare" phrases (but only "truths") that we can use for a "Hot Ones" party with my friends.
 _"Trousse"_ and _"Dard"_ are French puns meaning "Truth" and "Dare".
 
-I eventually evolved the application by adding another game: "jokes de papa".  
+I eventually evolved the application by adding another game: "jokes de papa".
 I wanted to keep the name "trousse ou dard" simply because it made me smile :)
 
 ## Development
 
-1. Clone the app using  
+1. Clone the app using
    `git clone git@github.com:Manoz/trousse-ou-dard.git`
 
-2. Install dependencies using `yarn`
-3. Run the app using `yarn dev`
+2. Install dependencies using `pnpm install`
+3. Run the app using `pnpm run dev`
 
-**Using JSBin.io**
+**Using JSONBin.io**
 
-The app uses [jsonbin.io](https://jsonbin.io) to store the data.
+The app uses [jsonbin.io](https://jsonbin.io) to store the data. All API calls go through a server-side proxy — the API key is never exposed to the client.
 
-1. Simply go to https://jsonbin.io/ and create a new account.
-2. Go to https://jsonbin.io/app/app/api-keys then create and copy your API key. In my case I use the `X-ACCESS-KEY`.
-3. Copy the token and add it to your `.env` file. With Nuxt, you don't need to escape the `$` character.
-   Your `.env` file should look like this:
-
-```
-NUXT_PUBLIC_JSONBIN_API_KEY="$5f$42$xxxxxxx"
-```
-
-4. Now create your own bin and copy the bin ID to your `.env` file.
-
-Your final `.env` file should look like this:
-
-```
-NUXT_PUBLIC_TROUSSE_BIN_ID="xxxxxx"
-NUXT_PUBLIC_JOKE_BIN_ID="xxxxxx"
-NUXT_PUBLIC_PREFER_BIN_ID="xxxxxx"
-NUXT_PUBLIC_TEN_BIN_ID="xxxxxx"
-NUXT_PUBLIC_HOWMUCH_BIN_ID="xxxxxx"
-NUXT_PUBLIC_JSONBIN_API_KEY="$5f$42$xxxxxxx"
-```
-
-The JSON structure of the bins should be the following:
+1. Go to https://jsonbin.io/ and create a new account.
+2. Go to https://jsonbin.io/app/api-keys, create and copy your API key (`X-ACCESS-KEY`).
+3. Create one bin per game type. Each bin must contain the following JSON structure:
 
 ```json
 {
-  "content": ["phrase 1", "phrase 2", "phrase 3", "phrase 4"]
+  "content": ["phrase 1", "phrase 2", "phrase 3"]
 }
 ```
+
+4. Copy each bin ID and add everything to your `.env` file:
+
+```
+NUXT_JSONBIN_API_KEY="$5f$42$xxxxxxx"
+NUXT_TROUSSE_BIN_ID=xxxxxxx
+NUXT_JOKE_BIN_ID=xxxxxxx
+NUXT_PREFER_BIN_ID=xxxxxxx
+NUXT_TEN_BIN_ID=xxxxxxx
+NUXT_HOWMUCH_BIN_ID=xxxxxxx
+```
+
+> Note: the `$` character does not need to be escaped in Nuxt `.env` files or on Vercel.
 
 ## Linting
 
 This project uses [ESLint](https://eslint.org/) and [Prettier](https://prettier.io/) for linting and formatting.
 
-Use ESLint and Prettier with:
-
 ```bash
-yarn lint
-```
-
-Fix formatting and linting with:
-
-```bash
-yarn lint:fix
+pnpm run lint        # Check
+pnpm run lint:fix    # Auto-fix
 ```
 
 ## Deployment
 
-My app is deployed on [Vercel](https://vercel.com/) but feel free to use whatever you want. Just add the environment variables to your deployment environment using the `NUXT_PUBLIC_` prefix (e.g., `NUXT_PUBLIC_TROUSSE_BIN_ID`). The `$` character does not need to be escaped on Vercel or in Nuxt `.env` files.
+The app is deployed on [Vercel](https://vercel.com/). Add the environment variables listed above to your deployment environment — no `NUXT_PUBLIC_` prefix, since all sensitive config is server-side only.
 
 ## Contributing
 

@@ -31,6 +31,10 @@ export const useGameStore = defineStore('gameStore', {
         }
 
         const content = await fetchApi(gameType)
+        if (!content || (Array.isArray(content) && content.length === 0)) {
+          throw new Error(`Failed to load content for game type: ${gameType}`)
+        }
+
         this.games[gameType].content = content
         this.games[gameType].loaded = true
       } catch (error) {
