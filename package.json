@@ -36,26 +36,28 @@
     "@headlessui/vue": "^1.7.23",
     "@heroicons/vue": "^2.2.0",
     "pinia": "^3.0.4",
-    "vue": "^3.5.25"
+    "vue": "^3.5.30"
   },
   "devDependencies": {
+    "@eslint/js": "^10.0.1",
     "@nuxtjs/tailwindcss": "^6.14.0",
     "@pinia/nuxt": "^0.11.3",
-    "@tailwindcss/forms": "^0.5.10",
-    "@types/node": "^24.10.1",
-    "@vite-pwa/nuxt": "^1.1.0",
-    "autoprefixer": "^10.4.22",
-    "eslint": "^9.39.1",
+    "@tailwindcss/forms": "^0.5.11",
+    "@types/node": "^25.5.0",
+    "@vite-pwa/nuxt": "^1.1.1",
+    "autoprefixer": "^10.4.27",
+    "eslint": "^10.0.3",
     "eslint-config-prettier": "^10.1.8",
-    "eslint-plugin-prettier": "^5.5.4",
-    "eslint-plugin-vue": "^10.6.2",
-    "globals": "^16.5.0",
+    "eslint-plugin-prettier": "^5.5.5",
+    "eslint-plugin-vue": "^10.8.0",
+    "globals": "^17.4.0",
     "husky": "^9.1.7",
-    "lint-staged": "^16.2.7",
-    "nuxt": "^4.2.1",
-    "postcss": "^8.5.6",
-    "prettier": "^3.7.1",
+    "lint-staged": "^16.4.0",
+    "nuxt": "^4.4.2",
+    "postcss": "^8.5.8",
+    "prettier": "^3.8.1",
     "tailwindcss": "^3.3.5",
-    "vue-eslint-parser": "^10.2.0"
-  }
+    "vue-eslint-parser": "^10.4.0"
+  },
+  "packageManager": "pnpm@10.32.1"
 }

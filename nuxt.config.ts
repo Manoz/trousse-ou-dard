@@ -1,7 +1,7 @@
 import { defineNuxtConfig } from 'nuxt/config'
 
 export default defineNuxtConfig({
-  compatibilityDate: '2023-11-28',
+  compatibilityDate: '2025-01-15',
 
   modules: ['@nuxtjs/tailwindcss', '@vite-pwa/nuxt', '@pinia/nuxt'],
 
@@ -81,6 +81,12 @@ export default defineNuxtConfig({
           href: 'https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;500;600&display=swap'
         }
       ]
+    }
+  },
+
+  vite: {
+    optimizeDeps: {
+      include: ['@headlessui/vue', '@heroicons/vue/24/outline']
     }
   },
 
