@@ -1,18 +1,10 @@
 export const fetchApi = async (gameType) => {
-  try {
-    return await $fetch(`/api/games/${gameType}`)
-  } catch {
-    return []
-  }
+  return await $fetch(`/api/games/${gameType}`)
 }
 
 export const addContentApi = async (gameType, newContent) => {
-  try {
-    return await $fetch(`/api/games/${gameType}`, {
-      method: 'POST',
-      body: { content: newContent }
-    })
-  } catch {
-    return null
-  }
+  return await $fetch(`/api/games/${gameType}`, {
+    method: 'POST',
+    body: { content: newContent }
+  })
 }
