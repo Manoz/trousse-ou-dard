@@ -10,23 +10,23 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ```bash
 # Install dependencies
-yarn
+pnpm install
 
 # Run development server (Nuxt dev server on http://localhost:3000)
-yarn dev
+pnpm run dev
 
 # Build for production
-yarn build
+pnpm run build
 
 # Preview production build locally
-yarn preview
+pnpm run preview
 
 # Generate static site
-yarn generate
+pnpm run generate
 
 # Linting and formatting
-yarn lint          # Check code with Prettier and ESLint
-yarn lint:fix      # Auto-fix formatting and linting issues
+pnpm run lint          # Check code with Prettier and ESLint
+pnpm run lint:fix      # Auto-fix formatting and linting issues
 ```
 
 ## Architecture
