@@ -1,18 +1,6 @@
 import { defineStore } from 'pinia'
 import { addContentApi, fetchApi } from '~/composables/useStoreApi'
 
-// Map game types to their JSONBin IDs - will be populated in the store
-function getGameBinIds() {
-  const config = useRuntimeConfig()
-  return {
-    trousse: config.public.trousseBinId,
-    joke: config.public.jokeBinId,
-    prefer: config.public.preferBinId,
-    ten: config.public.tenBinId,
-    howMuch: config.public.howMuchBinId
-  }
-}
-
 export const useGameStore = defineStore('gameStore', {
   state: () => ({
     games: {
@@ -34,42 +22,35 @@ export const useGameStore = defineStore('gameStore', {
   },
 
   actions: {
-    async fetchGameContent(gameType) {
-      try {
-        const GAME_BIN_IDS = getGameBinIds()
-        const binId = GAME_BIN_IDS[gameType]
-        if (!binId) {
-          throw new Error(`Unknown game type: ${gameType}`)
-        }
-
-        const fetchData = await fetchApi(binId)
-        return fetchData || []
-      } catch (error) {
-        console.error(`Oops, something went wrong while loading ${gameType}`, error)
-        return []
-      }
-    },
-
     async loadGameContent(gameType) {
       if (this.games[gameType]?.loaded) return
 
-      const content = await this.fetchGameContent(gameType)
+      try {
+        if (!this.games[gameType]) {
+          throw new Error(`Unknown game type: ${gameType}`)
+        }
 
-      this.games[gameType].content = content
-      this.games[gameType].loaded = true
+        const content = await fetchApi(gameType)
+        if (!content || (Array.isArray(content) && content.length === 0)) {
+          throw new Error(`Failed to load content for game type: ${gameType}`)
+        }
+
+        this.games[gameType].content = content
+        this.games[gameType].loaded = true
+      } catch (error) {
+        console.error(`Oops, something went wrong while loading ${gameType}`, error)
+      }
     },
 
     async addGameContent(gameType, newContent) {
-      const GAME_BIN_IDS = getGameBinIds()
-      const binId = GAME_BIN_IDS[gameType]
-      if (!binId) {
+      if (!this.games[gameType]) {
         throw new Error(`Unknown game type: ${gameType}`)
       }
 
-      const currentContent = this.games[gameType].content
-      const updatedContent = await addContentApi(binId, currentContent, newContent)
-
-      this.games[gameType].content = updatedContent
+      const updatedContent = await addContentApi(gameType, newContent)
+      if (updatedContent) {
+        this.games[gameType].content = updatedContent
+      }
       return updatedContent
     }
   }

@@ -8,14 +8,12 @@ export default defineNuxtConfig({
   css: ['~/assets/main.css'],
 
   runtimeConfig: {
-    public: {
-      trousseBinId: process.env.NUXT_PUBLIC_TROUSSE_BIN_ID || '',
-      jokeBinId: process.env.NUXT_PUBLIC_JOKE_BIN_ID || '',
-      preferBinId: process.env.NUXT_PUBLIC_PREFER_BIN_ID || '',
-      tenBinId: process.env.NUXT_PUBLIC_TEN_BIN_ID || '',
-      howMuchBinId: process.env.NUXT_PUBLIC_HOWMUCH_BIN_ID || '',
-      jsonbinApiKey: process.env.NUXT_PUBLIC_JSONBIN_API_KEY || ''
-    }
+    jsonbinApiKey: process.env.NUXT_JSONBIN_API_KEY || '',
+    trousseBinId: process.env.NUXT_TROUSSE_BIN_ID || '',
+    jokeBinId: process.env.NUXT_JOKE_BIN_ID || '',
+    preferBinId: process.env.NUXT_PREFER_BIN_ID || '',
+    tenBinId: process.env.NUXT_TEN_BIN_ID || '',
+    howMuchBinId: process.env.NUXT_HOWMUCH_BIN_ID || ''
   },
 
   pwa: {
@@ -44,7 +42,7 @@ export default defineNuxtConfig({
       navigateFallback: undefined,
       runtimeCaching: [
         {
-          urlPattern: /^https:\/\/api\.jsonbin\.io\/.*/i,
+          urlPattern: /\/api\/games\/.*/i,
           handler: 'NetworkFirst',
           options: {
             cacheName: 'jsonbin-api-cache',
@@ -87,6 +85,17 @@ export default defineNuxtConfig({
   vite: {
     optimizeDeps: {
       include: ['@headlessui/vue', '@heroicons/vue/24/outline']
+    }
+  },
+
+  routeRules: {
+    '/**': {
+      headers: {
+        'X-Frame-Options': 'DENY',
+        'X-Content-Type-Options': 'nosniff',
+        'Referrer-Policy': 'strict-origin-when-cross-origin',
+        'Permissions-Policy': 'camera=(), microphone=(), geolocation=()'
+      }
     }
   },
 

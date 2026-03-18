@@ -33,6 +33,7 @@ export default [
         defineNuxtConfig: 'readonly',
         navigateTo: 'readonly',
         useState: 'readonly',
+        $fetch: 'readonly',
         useFetch: 'readonly',
         useAsyncData: 'readonly',
         useRoute: 'readonly',
