@@ -38,6 +38,7 @@
 
       <a
         target="_blank"
+        rel="noopener noreferrer"
         class="inline-block ml-auto text-[#24292f] hover:text-gray-800"
         href="https://github.com/Manoz/trousse-ou-dard"
       >
